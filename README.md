@@ -1,16 +1,44 @@
-# React + Vite
+## Nombre del equipo.
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+## Integrantes: 
+Nombres: 
+Sebastian Alejandro Fica Droguett
+Alonso Ignacio Valenzuela Gonzales
 
-Currently, two official plugins are available:
+Correos: 
+seb.fica@duocuc.cl
+alo.valenzuela@duocuc.cl
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## React Compiler
+## Caso: 
+Caso de SonidoVivo
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Expanding the Oxlint configuration
+## Descripción del caso: 
+"SonidoVivo" es una pagina web de compras en linea a músicos o aficionados al sonido , brindando intrumento con precios accesibles y adaptadas a cada usuario.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## Estructura del proyecto: 
+src/
+├── components/
+│   ├── atoms/
+│   ├── molecules/
+│   ├── organisms/
+│   └── templates/
+└── pages/
+
+
+## Tecnologías utilizadas: 
+- React + Vite 
+- React Bootstrap 
+- react-router-dom.
+
+
+## Cómo ejecutar el proyecto: 
+    para poder ejecutar la pagina
+        npm install 
+        npm run dev.
+
+
+## Material complementario: 
+
+https://drive.google.com/drive/folders/1eXd8NFijBfCoC-25je-nII3zIXDd5BaY?usp=sharing
