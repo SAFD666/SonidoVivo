@@ -1,26 +1,22 @@
+import { Link } from 'react-router-dom';
+
 function Navbar() {
   return (
-    <nav className="navbar navbar-expand-lg bg-primary">
-      <div className="container">
-
-        <a className="navbar-brand text-white" href="/">
-          Sonido Vivo
-        </a>
-
-        <div className="navbar-nav">
-
-          <a className="nav-link text-white" href="/">
-            Inicio
-          </a>
-
-          <a className="nav-link text-white" href="/catalogo">
-            Catálogo
-          </a>
-
-        </div>
-
+    <header className="header-sonido-vivo">
+      <div className="logo-container">
+        <Link to="/" className="enlace-logo">
+          <span className="logo-icono"></span>
+          <h1>Sonido Vivo</h1>
+        </Link>
       </div>
-    </nav>
+
+      <nav className="menu-navegacion">
+        <ul>
+          <li><Link to="/">Inicio</Link></li>
+          <li><Link to="/catalogo">Catálogo</Link></li>
+        </ul>
+      </nav>
+    </header>
   );
 }
 

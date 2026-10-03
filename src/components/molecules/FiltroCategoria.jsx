@@ -1,21 +1,34 @@
-import CampoTexto from "../atoms/CampoTexto";
+import Boton from "../atoms/Boton";
 
-function CampoFormulario(props) {
+function FiltroCategoria({ marcasDisponibles, marcasSeleccionadas, onCambiarMarca, onAplicar }) {
   return (
-    <div className="mb-3">
+    <aside className="filtros-aside">
+      <h2>Filtros</h2>
+      <form onSubmit={(e) => { e.preventDefault(); onAplicar(); }}>
+        <fieldset className="filtro-fieldset">
+          <legend>Marca</legend>
+          {marcasDisponibles.map((marca) => (
+            <div key={marca} className="opcion-filtro">
+              <input
+                type="checkbox"
+                id={`marca-${marca}`}
+                value={marca}
+                checked={marcasSeleccionadas.includes(marca)}
+                onChange={() => onCambiarMarca(marca)}
+              />
+              <label htmlFor={`marca-${marca}`}>{marca}</label>
+            </div>
+          ))}
+        </fieldset>
 
-      <label className="form-label">
-        {props.label}
-      </label>
-
-      <CampoTexto
-        placeholder={props.placeholder}
-        value={props.value}
-        onChange={props.onChange}
-      />
-
-    </div>
+        <Boton 
+          texto="Aplicar Filtros" 
+          type="submit" 
+          className="btn-sonido-vivo btn-ancho-total" 
+        />
+      </form>
+    </aside>
   );
 }
 
-export default CampoFormulario;
+export default FiltroCategoria;

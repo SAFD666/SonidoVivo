@@ -1,9 +1,7 @@
-function Precio(props) {
+function Precio({ precio }) {
   return (
-    <p>
-
-      ${props.precio.toLocaleString('es-CL')}
-    
+    <p className="precio-texto">
+      ${precio?.toLocaleString('es-CL')}
     </p>
   );
 }

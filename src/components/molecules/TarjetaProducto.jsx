@@ -2,29 +2,35 @@ import Boton from "../atoms/Boton";
 import EtiquetaStock from "../atoms/EtiquetaStock";
 import Precio from "../atoms/Precio";
 
-function TarjetaProducto(props) {
+function TarjetaProducto({ codigo, nombre, marca, modelo, precio, stock, imagen, onVer }) {
   return (
-    <div className="card h-100 p-3">
+    <article className="tarjeta-producto">
+      <figure>
+        <img 
+          src={imagen || "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=400&q=80"} 
+          alt={nombre} 
+          loading="lazy" 
+        />
+      </figure>
 
-      <h5>{props.nombre}</h5>
+      <div>
+        <span className="codigo-item">Cód: {codigo}</span>
+        <h3>{nombre}</h3>
+        <p><strong>Marca:</strong> {marca} | <strong>Modelo:</strong> {modelo}</p>
+        <div>
+          <EtiquetaStock stock={stock} />
+        </div>
+        <Precio precio={precio} />
+      </div>
 
-      <p>
-        {props.marca} {props.modelo}
-      </p>
-
-      <Precio precio={props.precio} />
-
-      <EtiquetaStock stock={props.stock} />
-
-      <br />
-
-      <Boton
-        texto="Ver producto"
-        variante="primary"
-        onClick={props.onVer}
-      />
-
-    </div>
+      <div className="tarjeta-pie">
+        <Boton 
+          texto="Ver detalle" 
+          className="btn-comprar" 
+          onClick={onVer} 
+        />
+      </div>
+    </article>
   );
 }
 
