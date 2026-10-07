@@ -1,3 +1,85 @@
+/*Css Login*/
+
+.Titulo {
+background-color: #ffffff;
+padding: 40px 30px;
+border-radius: 10px;
+box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+width: 100%;
+max-width: 360px;
+margin: 40px auto;
+font-family: sans-serif;
+}
+
+.Titulo h2 {
+text-align: center;
+color: #333333;
+margin-bottom: 25px;
+font-weight: 600;
+}
+
+.Grupo-input {
+margin-bottom: 20px;
+}
+
+.Grupo-input label {
+display: block;
+margin-bottom: 8px;
+color: #555555;
+font-size: 14px;
+}
+
+.Grupo-input input {
+width: 100%;
+padding: 12px;
+border: 1px solid #cccccc;
+border-radius: 6px;
+font-size: 14px;
+box-sizing: border-box;
+transition: border-color 0.3s;
+}
+
+.Grupo-input input:focus {
+border-color: #006699; /* El azul de tu banner superior */
+outline: none;
+}
+
+.btn-ingresar {
+width: 100%;
+padding: 12px;
+background-color: #006699; /* Botón azul institucional */
+color: white;
+border: none;
+border-radius: 6px;
+font-size: 16px;
+font-weight: bold;
+cursor: pointer;
+transition: background-color 0.2s;
+}
+
+.btn-ingresar:hover {
+background-color: #004d73;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 :root {
   --color-primario: #087CD4;
   --color-secundario: #054a80;

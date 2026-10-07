@@ -14,6 +14,7 @@ function Navbar() {
         <ul>
           <li><Link to="/">Inicio</Link></li>
           <li><Link to="/catalogo">Catálogo</Link></li>
+          <li><Link to="/login">Iniciar Sesion</Link></li>
         </ul>
       </nav>
     </header>

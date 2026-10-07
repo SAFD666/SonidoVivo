@@ -1,4 +1,5 @@
 ## Nombre del equipo.
+Equipo 7
 
 ## Integrantes: 
 Nombres: 
