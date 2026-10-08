@@ -1,4 +1,4 @@
-function EstadoPerdido(props) {
+function EstadoPedido(props) {
     return (
         <span className="badge bg-primary">
             {props.estado}
@@ -6,4 +6,4 @@ function EstadoPerdido(props) {
     )
 }
 
-export default EstadoPerdido;
+export default EstadoPedido;

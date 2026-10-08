@@ -1,8 +1,9 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Inicio from "./pages/Inicio";
-import Catalogo from "./pages/Catálogo";
+import Catalogo from "./pages/Catalogo";
+import Login from "./pages/Login";
 import "./App.css";
-import Login from "./components/organisms/Login";
+
 
 function App() {
   return (

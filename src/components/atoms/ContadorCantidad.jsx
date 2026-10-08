@@ -3,14 +3,10 @@ import { useState } from 'react';
 function ContadorCantidad() {
   const [cantidad, setCantidad] = useState(1);
 
-
-
   function aumentar() {
     setCantidad(cantidad + 1);
   }
 
-
-  
   function disminuir() {
     if (cantidad > 1) {
       setCantidad(cantidad - 1);
@@ -18,7 +14,7 @@ function ContadorCantidad() {
   }
 
   return (
-    <div className="d-flex align-items-center gap-2">
+    <div className="contador-cantidad">
       <button
         className="btn btn-secondary"
         onClick={disminuir}

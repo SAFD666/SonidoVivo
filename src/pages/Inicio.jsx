@@ -4,7 +4,7 @@ import PlantillaPublica from "../components/templates/PlantillaPublica";
 const CATEGORIAS = [
   { nombre: "Guitarras Acústicas", ruta: "/catalogo" },
   { nombre: "Guitarras Eléctricas", ruta: "/catalogo" },
-  { nombre: "Bajos Eléctricos", ruta: "/catalogo"},
+  { nombre: "Bajos Eléctricos", ruta: "/catalogo" },
   { nombre: "Baterías", ruta: "/catalogo" },
   { nombre: "Teclados y Pianos", ruta: "/catalogo" },
   { nombre: "Amplificadores", ruta: "/catalogo" },
@@ -17,11 +17,11 @@ const CATEGORIAS = [
 function Inicio() {
   return (
     <PlantillaPublica>
-      
       <section className="bienvenida">
         <div className="hero-contenido">
           <h2>Instrumentos Musicales y Equipos de Sonido</h2>
           <p>Atención a clientes de Viña del Mar y envíos a todo Chile</p>
+
           <Link to="/catalogo" className="btn-sonido-vivo btn-hero">
             Ver Catálogo Completo
           </Link>
@@ -37,9 +37,6 @@ function Inicio() {
           {CATEGORIAS.map((cat, idx) => (
             <article key={idx} className="categoria-menu">
               <Link to={cat.ruta}>
-                <figure>
-                  <span className="categoria-icono">{cat.icono}</span>
-                </figure>
                 <h3>{cat.nombre}</h3>
               </Link>
             </article>
