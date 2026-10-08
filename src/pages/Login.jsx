@@ -1,7 +1,10 @@
 import React from 'react';
+import PlantillaPublica from "../components/templates/PlantillaPublica";
 
 function Login() {
   return (
+    <PlantillaPublica>
+
     <div className="Titulo">
       <h2>Iniciar Sesión</h2>
 
@@ -31,6 +34,8 @@ function Login() {
         </button>
       </form>
     </div>
+    
+    </PlantillaPublica>
   );
 }
 
