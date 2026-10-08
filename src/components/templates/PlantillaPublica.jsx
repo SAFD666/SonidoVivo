@@ -2,6 +2,7 @@
 import Navbar from '../organisms/Navbar';
 import Footer from '../organisms/Footer';
 
+
 function PlantillaPublica({ children }) {
   return (
     <div >

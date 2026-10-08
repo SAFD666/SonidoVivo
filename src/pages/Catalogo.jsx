@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import PlantillaPublica from "../components/templates/PlantillaPublica";
 import CatalogoProductos from "../components/organisms/CatalogoProductos";
 import FiltroCategoria from "../components/molecules/FiltroCategoria";
+import Boton from "../components/atoms/Boton";
+import { Link, useNavigate } from "react-router-dom";
+
 
 const PRODUCTOS_INICIALES = [
   {
@@ -74,14 +77,16 @@ function Catalogo() {
     <PlantillaPublica>
       <div className="contenedor-principal">
         <div className="catalogo-layout">
-        
+        <aside>
           <FiltroCategoria
             marcasDisponibles={MARCAS_FILTRO}
             marcasSeleccionadas={marcasSeleccionadas}
             onCambiarMarca={toggleMarca}
             onAplicar={aplicarFiltros}
           />
+          <Boton texto="Aplicar Filtros" onClick={onAplicar} />
 
+        </aside>
           
           <section>
             <h2 className="titulo-seccion">

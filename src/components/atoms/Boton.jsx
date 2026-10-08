@@ -1,7 +1,9 @@
-function Boton({ texto, onClick, className = "btn-sonido-vivo", type = "button" }) {
+function Boton(props) {
+  const className = props.className || "btn-sonido-vivo";
+
   return (
-    <button type={type} className={className} onClick={onClick}>
-      {texto}
+    <button type="button" className={className} onClick={props.onClick}>
+      {props.texto}
     </button>
   );
 }

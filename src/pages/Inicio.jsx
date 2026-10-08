@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
+import Boton from "../components/atoms/Boton";
 import PlantillaPublica from "../components/templates/PlantillaPublica";
 
 const CATEGORIAS = [
@@ -22,9 +23,11 @@ function Inicio() {
           <h2>Instrumentos Musicales y Equipos de Sonido</h2>
           <p>Atención a clientes de Viña del Mar y envíos a todo Chile</p>
 
-          <Link to="/catalogo" className="btn-sonido-vivo btn-hero">
-            Ver Catálogo Completo
-          </Link>
+          <Boton
+            texto="Ver Catálogo Completo"
+            className="btn-sonido-vivo btn-hero"
+            onClick={() => navigate("/Catalogo")}
+          />
         </div>
       </section>
 
