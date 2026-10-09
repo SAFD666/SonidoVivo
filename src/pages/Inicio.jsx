@@ -4,16 +4,16 @@ import PlantillaPublica from "../components/templates/PlantillaPublica";
 
 
 const CATEGORIAS = [
-  { nombre: "Guitarras Acústicas", ruta: "/catalogo" },
-  { nombre: "Guitarras Eléctricas", ruta: "/catalogo" },
-  { nombre: "Bajos Eléctricos", ruta: "/catalogo" },
-  { nombre: "Baterías", ruta: "/catalogo" },
-  { nombre: "Teclados y Pianos", ruta: "/catalogo" },
-  { nombre: "Amplificadores", ruta: "/catalogo" },
-  { nombre: "Micrófonos", ruta: "/catalogo" },
-  { nombre: "Pedales de Efecto", ruta: "/catalogo" },
-  { nombre: "Estudio y Grabación", ruta: "/catalogo" },
-  { nombre: "Accesorios", ruta: "/catalogo" },
+  { nombre: "Guitarras Acústicas", ruta: "/catalogo" , imagen: "/img/acustica.png"},
+  { nombre: "Guitarras Eléctricas", ruta: "/catalogo", imagen: "/img/electrica.png" },
+  { nombre: "Bajos Eléctricos", ruta: "/catalogo" , imagen: "/img/bajo electrico.png" },
+  { nombre: "Baterías", ruta: "/catalogo"  , imagen: "/img/baterias.png"},
+  { nombre: "Teclados y Pianos", ruta: "/catalogo"  , imagen: "img/pianos y teclados.png"},
+  { nombre: "Amplificadores", ruta: "/catalogo" , imagen: "/img/amplificadores.png"},
+  { nombre: "Micrófonos", ruta: "/catalogo" , imagen: "/img/microfonos.png"},
+  { nombre: "Pedales de Efecto", ruta: "/catalogo" , imagen: "/img/pedales de efecto.png"},
+  { nombre: "Estudio y Grabación", ruta: "/catalogo" , imagen: "/img/estudio y grabacion.png"},
+  { nombre: "Accesorios", ruta: "/catalogo" , imagen: "/img/accesorios.png"},
 ];
 
 function Inicio() {
@@ -42,12 +42,14 @@ function Inicio() {
 
         <div className="grilla-categoria">
           {CATEGORIAS.map((cat, idx) => (
-            <article key={idx} className="categoria-menu">
-              <Boton
-              texto="Ver Catálogo Completo"
-              className="btn-sonido-vivo btn-hero"
-              onClick={() => navigate("/catalogo")}
-            />
+            <article key={idx} className="tarjeta-producto" onClick={() => navigate("/catalogo")}>
+            
+              <figure >
+              <img src={cat.imagen} alt={cat.nombre}/>
+              </figure>
+              
+            <h3>{cat.nombre}</h3>
+            
             </article>
           ))}
         </div>
