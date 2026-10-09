@@ -29,7 +29,7 @@ function Login() {
           />
         </div>
 
-        <button type="button" className="btn-Ingresar">
+        <button type="button" className="btn-sonido-vivo">
           Ingresar
         </button>
       </form>

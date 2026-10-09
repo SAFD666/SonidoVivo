@@ -1,6 +1,7 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import Boton from "../components/atoms/Boton";
 import PlantillaPublica from "../components/templates/PlantillaPublica";
+
 
 const CATEGORIAS = [
   { nombre: "Guitarras Acústicas", ruta: "/catalogo" },
@@ -16,6 +17,8 @@ const CATEGORIAS = [
 ];
 
 function Inicio() {
+  const navigate = useNavigate();
+  
   return (
     <PlantillaPublica>
       <section className="bienvenida">
@@ -26,8 +29,9 @@ function Inicio() {
           <Boton
             texto="Ver Catálogo Completo"
             className="btn-sonido-vivo btn-hero"
-            onClick={() => navigate("/Catalogo")}
+            onClick={() => navigate("/catalogo")}
           />
+          
         </div>
       </section>
 
@@ -39,9 +43,11 @@ function Inicio() {
         <div className="grilla-categoria">
           {CATEGORIAS.map((cat, idx) => (
             <article key={idx} className="categoria-menu">
-              <Link to={cat.ruta}>
-                <h3>{cat.nombre}</h3>
-              </Link>
+              <Boton
+              texto="Ver Catálogo Completo"
+              className="btn-sonido-vivo btn-hero"
+              onClick={() => navigate("/catalogo")}
+            />
             </article>
           ))}
         </div>
