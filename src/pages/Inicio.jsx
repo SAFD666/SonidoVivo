@@ -4,16 +4,16 @@ import PlantillaPublica from "../components/templates/PlantillaPublica";
 
 
 const CATEGORIAS = [
-  { nombre: "Guitarras Acústicas", ruta: "/catalogo" , imagen: "/img/acustica.png"},
-  { nombre: "Guitarras Eléctricas", ruta: "/catalogo", imagen: "/img/electrica.png" },
-  { nombre: "Bajos Eléctricos", ruta: "/catalogo" , imagen: "/img/bajo electrico.png" },
-  { nombre: "Baterías", ruta: "/catalogo"  , imagen: "/img/baterias.png"},
-  { nombre: "Teclados y Pianos", ruta: "/catalogo"  , imagen: "img/pianos y teclados.png"},
-  { nombre: "Amplificadores", ruta: "/catalogo" , imagen: "/img/amplificadores.png"},
-  { nombre: "Micrófonos", ruta: "/catalogo" , imagen: "/img/microfonos.png"},
-  { nombre: "Pedales de Efecto", ruta: "/catalogo" , imagen: "/img/pedales de efecto.png"},
-  { nombre: "Estudio y Grabación", ruta: "/catalogo" , imagen: "/img/estudio y grabacion.png"},
-  { nombre: "Accesorios", ruta: "/catalogo" , imagen: "/img/accesorios.png"},
+  { nombre: "Guitarras Acústicas", ruta: "/categoria/guitarras-acusticas", imagen: "/img/acustica.png" },
+  { nombre: "Guitarras Eléctricas", ruta: "/categoria/guitarras-electricas", imagen: "/img/electrica.png" },
+  { nombre: "Bajos Eléctricos", ruta: "/categoria/bajos-electricos", imagen: "/img/bajo electrico.png" },
+  { nombre: "Baterías", ruta: "/categoria/baterias", imagen: "/img/baterias.png" },
+  { nombre: "Teclados y Pianos", ruta: "/categoria/teclados-y-pianos", imagen: "/img/pianos y teclados.png" },
+  { nombre: "Amplificadores", ruta: "/categoria/amplificadores", imagen: "/img/amplificadores.png" },
+  { nombre: "Micrófonos", ruta: "/categoria/microfonos", imagen: "/img/microfonos.png" },
+  { nombre: "Pedales de Efecto", ruta: "/categoria/pedales-de-efecto", imagen: "/img/pedales de efecto.png" },
+  { nombre: "Estudio y Grabación", ruta: "/categoria/estudio-y-grabacion", imagen: "/img/estudio y grabacion.png" },
+  { nombre: "Accesorios", ruta: "/categoria/accesorios", imagen: "/img/accesorios.png" },
 ];
 
 function Inicio() {
@@ -42,7 +42,7 @@ function Inicio() {
 
         <div className="grilla-categoria">
           {CATEGORIAS.map((cat, idx) => (
-            <article key={idx} className="tarjeta-producto" onClick={() => navigate("/catalogo")}>
+            <article key={idx} className="tarjeta-producto" onClick={() => navigate(cat.ruta)}>
             
               <figure >
               <img src={cat.imagen} alt={cat.nombre}/>

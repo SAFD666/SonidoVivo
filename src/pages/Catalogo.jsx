@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import PlantillaPublica from "../components/templates/PlantillaPublica";
-import CatalogoProductos from "../components/organisms/CatalogoProductos";
-import FiltroCategoria from "../components/molecules/FiltroCategoria";
+import { useNavigate } from 'react-router-dom';
 
-const PRODUCTOS_INICIALES = [
+import PlantillaPublica from '../components/templates/PlantillaPublica';
+import CatalogoProductos from '../components/organisms/CatalogoProductos';
+import FiltroCategoria from '../components/molecules/FiltroCategoria'; 
+import Boton from '../components/atoms/Boton';
+
+export const PRODUCTOS_INICIALES = [
   {
     codigo: "GE001",
     nombre: "Guitarra Eléctrica Squier Stratocaster® Affinity",
@@ -45,6 +48,7 @@ const PRODUCTOS_INICIALES = [
 const MARCAS_FILTRO = ["Yamaha", "Fender", "Squier", "Takamine", "Epiphone"];
 
 function Catalogo() {
+  const navigate = useNavigate();
   const [marcasSeleccionadas, setMarcasSeleccionadas] = useState([]);
   const [productosVisibles, setProductosVisibles] = useState(PRODUCTOS_INICIALES);
 
@@ -67,9 +71,8 @@ function Catalogo() {
   };
 
   const handleVerDetalle = (producto) => {
-    alert(`Detalle: ${producto.nombre} - Precio: $${producto.precio.toLocaleString('es-CL')}`);
-  };
-
+  navigate(`/producto/${producto.codigo}`);
+};
   return (
     <PlantillaPublica>
       <div className="contenedor-principal">
