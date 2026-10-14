@@ -22,3 +22,4 @@ function App() {
     </TiendaProvider>
   );
 }
+export default App;
