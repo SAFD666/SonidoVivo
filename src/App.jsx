@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+import { TiendaProvider } from './context/TiendaContext';
 import Inicio from './pages/Inicio';
 import Catalogo from './pages/Catalogo';
 import DetalleProducto from './pages/DetalleProducto';
@@ -9,15 +10,15 @@ import './App.css';
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Inicio />} />
-      <Route path="/catalogo" element={<Catalogo />} />
-      <Route path="/categoria/:slug" element={<Categorias />} />
-      <Route path="/ofertas" element={<Ofertas />} />
-      <Route path="/producto/:id" element={<DetalleProducto />} />
-      <Route path="/login" element={<Login />} />
-    </Routes>
+    <TiendaProvider>
+      <Routes>
+        <Route path="/" element={<Inicio />} />
+        <Route path="/catalogo" element={<Catalogo />} />
+        <Route path="/categoria/:slug" element={<Categorias />} />
+        <Route path="/ofertas" element={<Ofertas />} />
+        <Route path="/producto/:id" element={<DetalleProducto />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </TiendaProvider>
   );
 }
-
-export default App;

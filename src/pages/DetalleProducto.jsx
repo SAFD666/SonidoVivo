@@ -5,12 +5,14 @@ import Precio from '../components/atoms/Precio';
 import EtiquetaStock from '../components/atoms/EtiquetaStock';
 import ContadorCantidad from '../components/atoms/ContadorCantidad';
 import Boton from '../components/atoms/Boton';
-import { productos } from '../data/productos';
+import { useTienda } from '../context/TiendaContext';
 
 function DetalleProducto() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { productos, agregarAlCarrito } = useTienda();
   const [cantidad, setCantidad] = useState(1);
+  const [mensajeAgregado, setMensajeAgregado] = useState(false);
 
   const producto = productos.find(
     (p) => String(p.codigo) === String(id) || String(p.id) === String(id)
@@ -33,7 +35,9 @@ function DetalleProducto() {
   }
 
   const handleAgregarAlCarrito = () => {
-    alert(`Agregaste ${cantidad} unidad(es) de "${producto.nombre}"`);
+    agregarAlCarrito(producto, cantidad);
+    setMensajeAgregado(true);
+    setTimeout(() => setMensajeAgregado(false), 2500);
   };
 
   return (
@@ -79,11 +83,17 @@ function DetalleProducto() {
               </div>
 
               <Boton
-                texto="Añadir al Carrito"
+                texto={producto.stock > 0 ? "Añadir al Carrito" : "Sin Stock"}
                 onClick={handleAgregarAlCarrito}
                 deshabilitado={producto.stock <= 0}
                 className="btn-sonido-vivo btn-comprar"
               />
+
+              {mensajeAgregado && (
+                <p className='mensaje-agregado'>
+                  Se agregaron {cantidad} unidad(es) al carrito.
+                </p>
+              )}
             </footer>
           </section>
         </article>

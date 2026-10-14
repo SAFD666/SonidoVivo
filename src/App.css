@@ -720,6 +720,12 @@ footer.footer-sonido-vivo a {
   }
 }
 
+.mensaje-agregado{
+  background-color: #28a745;
+  margin: 5px 0 0 0;
+  font-weight: bold;
+}
+
 
 /* Responsive */
 @media (max-width: 950px) {
