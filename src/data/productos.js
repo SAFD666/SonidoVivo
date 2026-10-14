@@ -1,4 +1,3 @@
-// src/data/productos.js
 export const productos = [
   {
     id: "GA001",
@@ -651,3 +650,14 @@ export const productos = [
     esOferta: false
   }
 ];
+
+
+export const generarSlug = (texto) => {
+  return texto
+    .toString()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, "-")
+    .trim();
+};

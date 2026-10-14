@@ -2,10 +2,11 @@ import Boton from "../atoms/Boton";
 import EtiquetaStock from "../atoms/EtiquetaStock";
 import Precio from "../atoms/Precio";
 
-function TarjetaProducto({ codigo, nombre, marca, modelo, precio, stock, imagen, onVer }) {
+function TarjetaProducto({ codigo, nombre, marca, modelo, precio, stock, imagen, esOferta, onVer }) {
   return (
     <article className="tarjeta-producto">
-      <figure>
+      <figure className="tarjeta-imagen-contenedor">
+        {esOferta && <span className="etiqueta-oferta">¡Oferta!</span>}
         <img 
           src={imagen || "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=400&q=80"} 
           alt={nombre} 

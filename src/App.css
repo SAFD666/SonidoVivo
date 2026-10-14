@@ -95,7 +95,7 @@ a {
 
 /* Header & Navbar */
 .header-sonido-vivo {
-  background-color: var(--color-primario);
+  background: linear-gradient(135deg, #087CD4 0%, #054a80 100%);
   color: white;
   padding: 1rem 2rem;
   display: flex;
@@ -173,7 +173,7 @@ a {
 
 /* Botones Atómicos */
 .btn-sonido-vivo {
-  background-color: var(--color-primario);
+  background: linear-gradient(135deg, #087CD4 0%, #054a80 100%);
   color: white;
   border: none;
   padding: 0.65rem 1.4rem;
@@ -398,7 +398,7 @@ a {
 
 /* Footer */
 footer.footer-sonido-vivo {
-  background-color: var(--color-primario);
+  background: linear-gradient(135deg, #087CD4 0%, #054a80 100%);
   color: white;
   padding: 35px 20px;
   margin-top: 60px;
@@ -612,6 +612,114 @@ footer.footer-sonido-vivo a {
   padding: 8px 16px;    
   display: inline-block;
 }
+
+
+/* Ajuste de logo para que no se achique de más en móvil */
+.enlace-logo img {
+  height: 44px;
+  width: auto;
+  max-width: none;
+  border-radius: 6px;
+  object-fit: contain;
+}
+
+/* Estado deshabilitado para Boton */
+.btn-sonido-vivo:disabled,
+.btn-comprar:disabled {
+  background-color: #cbd5e1;
+  color: #64748b;
+  cursor: not-allowed;
+}
+
+/* Átomo: ContadorCantidad */
+.contador-cantidad {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  overflow: hidden;
+  background-color: #ffffff;
+}
+
+.contador-cantidad button {
+  background-color: #f1f5f9;
+  border: none;
+  color: #333333;
+  font-size: 18px;
+  font-weight: bold;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.contador-cantidad button:hover:not(:disabled) {
+  background-color: #e2e8f0;
+}
+
+.contador-cantidad button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.contador-cantidad span {
+  min-width: 42px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 15px;
+  color: #1a202c;
+}
+
+/* Badge de Oferta en TarjetaProducto */
+.tarjeta-imagen-contenedor {
+  position: relative;
+}
+
+.etiqueta-oferta {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-color: #e63946;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px 10px;
+  border-radius: 20px;
+  box-shadow: 0 2px 6px rgba(230, 57, 70, 0.35);
+}
+
+/* Cursor interactivo para tarjetas de categorías en Inicio */
+.grilla-categoria .tarjeta-producto {
+  cursor: pointer;
+  text-align: center;
+}
+
+/* Responsive Móvil (>= 360px según requerimiento DSY1104) */
+@media (max-width: 600px) {
+  .header-sonido-vivo {
+    flex-direction: column;
+    gap: 12px;
+    padding: 1rem;
+  }
+
+  .menu-navegacion ul {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .hero-contenido h2 {
+    font-size: 26px;
+  }
+
+  .Titulo {
+    margin: 20px 15px;
+    padding: 25px 20px;
+    box-sizing: border-box;
+    max-width: calc(100% - 30px);
+  }
+}
+
 
 /* Responsive */
 @media (max-width: 950px) {

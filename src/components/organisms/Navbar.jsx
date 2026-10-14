@@ -15,6 +15,7 @@ function Navbar() {
         <ul>
           <li><Boton texto="Catálogo" className="btn-sonido-vivo" onClick={() => navigate("/catalogo") } /></li>
           <li><Boton texto="Iniciar Sesión"  className="btn-sonido-vivo" onClick={() => navigate("/login") }/></li>
+          <li><Boton texto="Ofertas" className="btn-sonido-vivo" onClick={() => navigate("/ofertas")} /></li>
         </ul>
       </nav>
     </header>

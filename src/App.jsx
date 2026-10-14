@@ -2,15 +2,18 @@ import { Routes, Route } from 'react-router-dom';
 import Inicio from './pages/Inicio';
 import Catalogo from './pages/Catalogo';
 import DetalleProducto from './pages/DetalleProducto';
-import Categorias from './pages/Categorias'; 
+import Categorias from './pages/Categorias';
+import Ofertas from './pages/Ofertas';
 import Login from './pages/Login';
 import './App.css';
+
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Inicio />} />
       <Route path="/catalogo" element={<Catalogo />} />
-      <Route path="/categoria/:slug" element={<Categorias />} /> 
+      <Route path="/categoria/:slug" element={<Categorias />} />
+      <Route path="/ofertas" element={<Ofertas />} />
       <Route path="/producto/:id" element={<DetalleProducto />} />
       <Route path="/login" element={<Login />} />
     </Routes>

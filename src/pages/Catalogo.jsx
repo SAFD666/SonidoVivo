@@ -1,56 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import PlantillaPublica from '../components/templates/PlantillaPublica';
 import CatalogoProductos from '../components/organisms/CatalogoProductos';
-import FiltroCategoria from '../components/molecules/FiltroCategoria'; 
-import Boton from '../components/atoms/Boton';
-
-export const PRODUCTOS_INICIALES = [
-  {
-    codigo: "GE001",
-    nombre: "Guitarra Eléctrica Squier Stratocaster® Affinity",
-    marca: "Squier",
-    modelo: "Affinity Series™",
-    stock: 8,
-    precio: 399990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=400&q=80"
-  },
-  {
-    codigo: "GE002",
-    nombre: "Guitarra Eléctrica Yamaha RGX121Z",
-    marca: "Yamaha",
-    modelo: "RGX121Z",
-    stock: 10,
-    precio: 349990,
-    imagen: "https://images.unsplash.com/photo-1550985616-10810253b84d?w=400&q=80"
-  },
-  {
-    codigo: "GA001",
-    nombre: "Guitarra Acústica Folk Yamaha F310",
-    marca: "Yamaha",
-    modelo: "F310",
-    stock: 8,
-    precio: 129990,
-    imagen: "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=400&q=80"
-  },
-  {
-    codigo: "GA002",
-    nombre: "Guitarra Acústica Fender CD-60S Dreadnought",
-    marca: "Fender",
-    modelo: "CD-60S",
-    stock: 5,
-    precio: 189990,
-    imagen: "https://images.unsplash.com/photo-1525201548942-d8732f6617a0?w=400&q=80"
-  }
-];
-
-const MARCAS_FILTRO = ["Yamaha", "Fender", "Squier", "Takamine", "Epiphone"];
+import FiltroCategoria from '../components/molecules/FiltroCategoria';
+import { productos } from '../data/productos';
 
 function Catalogo() {
   const navigate = useNavigate();
   const [marcasSeleccionadas, setMarcasSeleccionadas] = useState([]);
-  const [productosVisibles, setProductosVisibles] = useState(PRODUCTOS_INICIALES);
+  const [productosVisibles, setProductosVisibles] = useState(productos);
+
+  const marcasDisponibles = useMemo(() => {
+    return [...new Set(productos.map((p) => p.marca))];
+  }, []);
 
   const toggleMarca = (marca) => {
     if (marcasSeleccionadas.includes(marca)) {
@@ -62,40 +25,39 @@ function Catalogo() {
 
   const aplicarFiltros = () => {
     if (marcasSeleccionadas.length === 0) {
-      setProductosVisibles(PRODUCTOS_INICIALES);
+      setProductosVisibles(productos);
     } else {
       setProductosVisibles(
-        PRODUCTOS_INICIALES.filter((p) => marcasSeleccionadas.includes(p.marca))
+        productos.filter((p) => marcasSeleccionadas.includes(p.marca))
       );
     }
   };
 
   const handleVerDetalle = (producto) => {
-  navigate(`/producto/${producto.codigo}`);
-};
+    navigate(`/producto/${producto.codigo}`);
+  };
+
   return (
     <PlantillaPublica>
       <div className="contenedor-principal">
         <div className="catalogo-layout">
           <aside>
             <FiltroCategoria
-              marcasDisponibles={MARCAS_FILTRO}
+              marcasDisponibles={marcasDisponibles}
               marcasSeleccionadas={marcasSeleccionadas}
               onCambiarMarca={toggleMarca}
               onAplicar={aplicarFiltros}
             />
           </aside>
-          
+
           <section>
-            <h2 className="titulo-seccion">
-              Instrumentos y Equipos
-            </h2>
+            <h2 className="titulo-seccion">Instrumentos y Equipos</h2>
             <p className="subtitulo-catalogo">
               Mostrando {productosVisibles.length} productos disponibles
             </p>
-            <CatalogoProductos 
-              productos={productosVisibles} 
-              onVer={handleVerDetalle} 
+            <CatalogoProductos
+              productos={productosVisibles}
+              onVer={handleVerDetalle}
             />
           </section>
         </div>

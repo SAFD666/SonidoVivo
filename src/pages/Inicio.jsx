@@ -6,12 +6,11 @@ import PlantillaPublica from "../components/templates/PlantillaPublica";
 const CATEGORIAS = [
   { nombre: "Guitarras Acústicas", ruta: "/categoria/guitarras-acusticas", imagen: "/img/acustica.png" },
   { nombre: "Guitarras Eléctricas", ruta: "/categoria/guitarras-electricas", imagen: "/img/electrica.png" },
-  { nombre: "Bajos Eléctricos", ruta: "/categoria/bajos-electricos", imagen: "/img/bajo electrico.png" },
-  { nombre: "Baterías", ruta: "/categoria/baterias", imagen: "/img/baterias.png" },
+  { nombre: "Bajos", ruta: "/categoria/bajos", imagen: "/img/bajo electrico.png" },
+  { nombre: "Baterías y Percusión", ruta: "/categoria/baterias-y-percusion", imagen: "/img/baterias.png" },
   { nombre: "Teclados y Pianos", ruta: "/categoria/teclados-y-pianos", imagen: "/img/pianos y teclados.png" },
   { nombre: "Amplificadores", ruta: "/categoria/amplificadores", imagen: "/img/amplificadores.png" },
-  { nombre: "Micrófonos", ruta: "/categoria/microfonos", imagen: "/img/microfonos.png" },
-  { nombre: "Pedales de Efecto", ruta: "/categoria/pedales-de-efecto", imagen: "/img/pedales de efecto.png" },
+  { nombre: "Pedales y Efectos", ruta: "/categoria/pedales-y-efectos", imagen: "/img/pedales de efecto.png" },
   { nombre: "Estudio y Grabación", ruta: "/categoria/estudio-y-grabacion", imagen: "/img/estudio y grabacion.png" },
   { nombre: "Accesorios", ruta: "/categoria/accesorios", imagen: "/img/accesorios.png" },
 ];

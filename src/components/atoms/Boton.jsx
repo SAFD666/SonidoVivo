@@ -1,9 +1,12 @@
-function Boton(props) {
-  const className = props.className || "btn-sonido-vivo";
-
+function Boton({ texto, onClick, className = "btn-sonido-vivo", type = "button", deshabilitado = false }) {
   return (
-    <button type="button" className={className} onClick={props.onClick}>
-      {props.texto}
+    <button
+      type={type}
+      className={className}
+      onClick={onClick}
+      disabled={deshabilitado}
+    >
+      {texto}
     </button>
   );
 }
