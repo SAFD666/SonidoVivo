@@ -7,6 +7,8 @@ import Categorias from './pages/Categorias';
 import Ofertas from './pages/Ofertas';
 import Login from './pages/Login';
 import Carrito from './pages/Carrito';
+import CompraExitosa from './pages/CompraExitosa';
+import PagoFallido from './pages/PagoFallido';
 import Checkout from './pages/checkout';
 import RutaProtegida from './components/RutaProtegida';
 import './App.css';
@@ -22,6 +24,8 @@ function App() {
         <Route path="/producto/:id" element={<DetalleProducto />} />
         <Route path="/login" element={<Login />} />
         <Route path="/carrito" element={<Carrito />} />
+        <Route path="/pago-fallido" element={<PagoFallido />}></Route>
+        <Route path="/compra-exitosa" element={<CompraExitosa />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/checkout" element={<RutaProtegida roles={["Cliente"]}><Checkout /> </RutaProtegida>}/>
       </Routes>
