@@ -6,6 +6,7 @@ import DetalleProducto from './pages/DetalleProducto';
 import Categorias from './pages/Categorias';
 import Ofertas from './pages/Ofertas';
 import Login from './pages/Login';
+import Checkout from './pages/Checkout';
 import './App.css';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/ofertas" element={<Ofertas />} />
         <Route path="/producto/:id" element={<DetalleProducto />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/checkout" element={<Checkout />} />
       </Routes>
     </TiendaProvider>
   );

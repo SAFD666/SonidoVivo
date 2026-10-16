@@ -1,18 +1,26 @@
 import CampoTexto from "../atoms/CampoTexto";
 
-function CampoFormulario(props) {
+function CampoFormulario({ label, id, name, type, placeholder, value, onChange, required, min, step, error }) {
     return (
-        <div className="mb-3">
+        <div className="mb-3 campo-formulario">
 
-            <label className="form-label">
-                {props.label}
+            <label className="form-label" htmlFor={id}>
+                {label}
             </label>
-            
+
             <CampoTexto
-             placeholder={props.placeholder}
-             value={props.value}
-             onChange={props.onChange}
+             id={id}
+             name={name}
+             type={type}
+             placeholder={placeholder}
+             value={value}
+             onChange={onChange}
+             required={required}
+             min={min}
+             step={step}
             />
+
+            {error && <small className="texto-error">{error}</small>}
 
         </div>
     );

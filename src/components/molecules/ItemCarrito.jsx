@@ -1,19 +1,33 @@
 import Precio from "../atoms/Precio";
 import ContadorCantidad from "../atoms/ContadorCantidad";
+import Boton from "../atoms/Boton";
 
-function ItemCarrito(props) {
+function ItemCarrito({ nombre, codigo, imagen, precio, cantidad, stock, onCambiarCantidad, onEliminar }) {
   return (
+    <div className="item-carrito">
 
-    <div className="card p-3 mb-3">
+      <img src={imagen} alt={nombre} className="item-carrito-imagen" />
 
-      <h5>{props.nombre}</h5>
+      <div className="item-carrito-datos">
+        <span className="codigo-item">Cód: {codigo}</span>
+        <h5>{nombre}</h5>
+        <Precio precio={precio} />
+      </div>
 
-      <Precio precio={props.precio} />
+      <ContadorCantidad
+        cantidad={cantidad}
+        maximo={stock}
+        onChange={onCambiarCantidad}
+      />
 
-      <ContadorCantidad />
+      <div className="item-carrito-subtotal">
+        <small>Subtotal</small>
+        <Precio precio={precio * cantidad} />
+      </div>
+
+      <Boton texto="Eliminar" className="btn btn-outline-danger btn-sm" onClick={onEliminar} />
 
     </div>
-    
   );
 }
 

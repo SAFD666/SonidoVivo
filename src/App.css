@@ -726,6 +726,144 @@ footer.footer-sonido-vivo a {
   font-weight: bold;
 }
 
+/* Molécula: ItemCarrito */
+.item-carrito {
+  display: grid;
+  grid-template-columns: 80px 1fr auto auto auto;
+  align-items: center;
+  gap: 16px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  text-align: left;
+}
+
+.item-carrito-imagen {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.item-carrito-datos h5 {
+  margin: 4px 0;
+  font-size: 16px;
+}
+
+.item-carrito-subtotal {
+  text-align: right;
+}
+
+@media (max-width: 600px) {
+  .item-carrito {
+    grid-template-columns: 60px 1fr;
+  }
+  .item-carrito-imagen {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+/* Organismo: ResumenCompra */
+.resumen-compra {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  text-align: left;
+}
+
+.resumen-compra h3 {
+  font-size: 20px;
+  color: var(--color-primario);
+  margin-bottom: 15px;
+}
+
+.resumen-lista {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 15px 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.resumen-lista li {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 14px;
+  padding: 6px 0;
+}
+
+.resumen-fila {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+}
+
+.resumen-total {
+  font-size: 18px;
+  font-weight: bold;
+  border-top: 1px solid #e2e8f0;
+  margin-top: 8px;
+  padding-top: 10px;
+}
+
+.resumen-total .precio-texto {
+  margin: 0;
+}
+
+/* Página Carrito */
+.carrito-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 30px;
+  align-items: start;
+  text-align: left;
+}
+
+.acciones-carrito {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+@media (max-width: 950px) {
+  .carrito-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Molécula: CampoFormulario */
+.campo-formulario {
+  text-align: left;
+}
+
+.texto-error {
+  display: block;
+  color: #dc3545;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+/* Organismo: FormularioCheckout */
+.formulario-checkout {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  text-align: left;
+}
+
+.formulario-checkout h3 {
+  font-size: 20px;
+  color: var(--color-primario);
+  margin-bottom: 20px;
+}
+
 
 /* Responsive */
 @media (max-width: 950px) {
