@@ -929,6 +929,31 @@ footer.footer-sonido-vivo a {
   }
 }
 
+/* Página Login */
+.aviso-login {
+  color: var(--oro-claro);
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.cambiar-modo-login {
+  text-align: center;
+  font-size: 14px;
+  color: var(--texto-suave);
+  margin-top: 18px;
+}
+
+.enlace-texto {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--oro);
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 @media (max-width: 600px) {
   .header-sonido-vivo {
     flex-direction: column;
