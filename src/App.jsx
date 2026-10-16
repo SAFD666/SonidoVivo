@@ -6,7 +6,8 @@ import DetalleProducto from './pages/DetalleProducto';
 import Categorias from './pages/Categorias';
 import Ofertas from './pages/Ofertas';
 import Login from './pages/Login';
-import Checkout from './pages/Checkout';
+import Checkout from './pages/checkout';
+import RutaProtegida from './components/RutaProtegida';
 import './App.css';
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path="/producto/:id" element={<DetalleProducto />} />
         <Route path="/login" element={<Login />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/checkout" element={<RutaProtegida roles={["Cliente"]}><Checkout /> </RutaProtegida>}/>
       </Routes>
     </TiendaProvider>
   );

@@ -90,8 +90,9 @@ export function TiendaProvider({ children }) {
     return { exito: true, usuario: nuevoUsuario };
   };
 
-  const cerrarSesion = () => {
+    const cerrarSesion = () => {
     setUsuarioActivo(null);
+    setCarrito([]);
   };
 
   // --- FUNCIONES DEL CARRITO ---
