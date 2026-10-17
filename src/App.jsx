@@ -11,6 +11,7 @@ import CompraExitosa from './pages/CompraExitosa';
 import PagoFallido from './pages/PagoFallido';
 import Checkout from './pages/checkout';
 import RutaProtegida from './components/RutaProtegida';
+import MisPedidos from './pages/MisPedidos';
 import './App.css';
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path="/compra-exitosa" element={<CompraExitosa />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/checkout" element={<RutaProtegida roles={["Cliente"]}><Checkout /> </RutaProtegida>}/>
+        <Route path="/mis-pedidos" element={<RutaProtegida roles={["Cliente"]}><MisPedidos /> </RutaProtegida>} />
       </Routes>
     </TiendaProvider>
   );

@@ -24,7 +24,6 @@ function PaginaCarrito() {
           <h1 className="titulo-seccion">Mi carrito de compras</h1>
 
           <section className="carrito-vacio">
-            <div className="carrito-icono">🛒</div>
 
             <h2>Tu carrito está vacío</h2>
 
