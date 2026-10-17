@@ -1,4 +1,5 @@
 export const productos = [
+  // --- GUITARRAS ACÚSTICAS ---
   {
     id: "GA001",
     codigo: "GA001",
@@ -8,7 +9,7 @@ export const productos = [
     categoria: "Guitarras Acústicas",
     stock: 8,
     precio: 129990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=600&q=80",
     descripcion: "Tapa de abeto, aros y fondo de meranti. Ideal para iniciantes.",
     esOferta: false
   },
@@ -21,7 +22,7 @@ export const productos = [
     categoria: "Guitarras Acústicas",
     stock: 5,
     precio: 189990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1525201548942-d8732f6617a0?w=600&q=80",
     descripcion: "Tapa de abeto macizo, brazo de caoba. Sonido cálido y proyectado.",
     esOferta: true
   },
@@ -34,7 +35,7 @@ export const productos = [
     categoria: "Guitarras Acústicas",
     stock: 10,
     precio: 89990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1550985616-10810253b84d?w=600&q=80",
     descripcion: "Nailon, tapa de abeto. Ideal para estudio y flamenco.",
     esOferta: false
   },
@@ -47,7 +48,7 @@ export const productos = [
     categoria: "Guitarras Acústicas",
     stock: 3,
     precio: 349990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1541689592655-f5f52825a3b8?w=600&q=80",
     descripcion: "Pickup integrado, afinador incorporado.",
     esOferta: false
   },
@@ -64,6 +65,8 @@ export const productos = [
     descripcion: "Tamaño reducido para niños de 6 a 10 años.",
     esOferta: true
   },
+
+  // --- GUITARRAS ELÉCTRICAS ---
   {
     id: "GE001",
     codigo: "GE001",
@@ -86,7 +89,7 @@ export const productos = [
     categoria: "Guitarras Eléctricas",
     stock: 4,
     precio: 329990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1550291652-6ea9114a47b1?w=600&q=80",
     descripcion: "Cuerpo caoba, tapa arce, pastillas humbucker.",
     esOferta: false
   },
@@ -99,7 +102,7 @@ export const productos = [
     categoria: "Guitarras Eléctricas",
     stock: 3,
     precio: 319990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1525201548942-d8732f6617a0?w=600&q=80",
     descripcion: "Cuerpo caoba, mástil caoba, 2 humbuckers.",
     esOferta: false
   },
@@ -112,7 +115,7 @@ export const productos = [
     categoria: "Guitarras Eléctricas",
     stock: 4,
     precio: 239990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1516924962500-2b4b3b99ea02?w=600&q=80",
     descripcion: "Cuerpo álamo, clavijero vintage, 2 pastillas single.",
     esOferta: true
   },
@@ -125,10 +128,12 @@ export const productos = [
     categoria: "Guitarras Eléctricas",
     stock: 2,
     precio: 549990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1556449895-a33c9dba33dd?w=600&q=80",
     descripcion: "Semi-hueca, 2 humbuckers, ideal para jazz y blues.",
     esOferta: false
   },
+
+  // --- BAJOS ---
   {
     id: "BA001",
     codigo: "BA001",
@@ -138,7 +143,7 @@ export const productos = [
     categoria: "Bajos",
     stock: 4,
     precio: 269990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1460723237483-7a6dc9d0b212?w=600&q=80",
     descripcion: "Dos pastillas single-coil Jazz Bass, mástil de arce.",
     esOferta: false
   },
@@ -151,7 +156,7 @@ export const productos = [
     categoria: "Bajos",
     stock: 3,
     precio: 259990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1445743432342-eac500ce72b7?w=600&q=80",
     descripcion: "Pastilla split-coil, sonido contundente y clásico.",
     esOferta: false
   },
@@ -164,7 +169,7 @@ export const productos = [
     categoria: "Bajos",
     stock: 2,
     precio: 379990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1550985616-10810253b84d?w=600&q=80",
     descripcion: "Circuito activo, EQ de 2 bandas, mástil de 5 piezas.",
     esOferta: true
   },
@@ -177,7 +182,7 @@ export const productos = [
     categoria: "Bajos",
     stock: 2,
     precio: 289990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=600&q=80",
     descripcion: "Cuerpo de caoba, preamp Fishman con afinador.",
     esOferta: false
   },
@@ -190,10 +195,12 @@ export const productos = [
     categoria: "Bajos",
     stock: 5,
     precio: 169990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1445743432342-eac500ce72b7?w=600&q=80",
     descripcion: "Escala corta, ligero, perfecto para jóvenes y viaje.",
     esOferta: false
   },
+
+  // --- TECLADOS Y PIANOS ---
   {
     id: "TE001",
     codigo: "TE001",
@@ -203,7 +210,7 @@ export const productos = [
     categoria: "Teclados y Pianos",
     stock: 6,
     precio: 199990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=600&q=80",
     descripcion: "622 voces, 205 estilos, teclas sensibles al tacto.",
     esOferta: true
   },
@@ -216,7 +223,7 @@ export const productos = [
     categoria: "Teclados y Pianos",
     stock: 3,
     precio: 399990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1552422535-c45813c61732?w=600&q=80",
     descripcion: "Teclado Scaled Hammer Action II, conexión USB, compacto.",
     esOferta: false
   },
@@ -229,7 +236,7 @@ export const productos = [
     categoria: "Teclados y Pianos",
     stock: 2,
     precio: 589990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=600&q=80",
     descripcion: "Sintetizador analógico polifónico de 4 voces con efectos digitales.",
     esOferta: false
   },
@@ -242,7 +249,7 @@ export const productos = [
     categoria: "Teclados y Pianos",
     stock: 5,
     precio: 149990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&q=80",
     descripcion: "Teclas sensibles a la velocidad, 8 pads, 8 perillas, 9 faders.",
     esOferta: true
   },
@@ -255,10 +262,12 @@ export const productos = [
     categoria: "Teclados y Pianos",
     stock: 2,
     precio: 649990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=600&q=80",
     descripcion: "Motor de sonido SuperNATURAL, teclado PHA-4 Standard, Bluetooth.",
     esOferta: false
   },
+
+  // --- BATERÍAS Y PERCUSIÓN ---
   {
     id: "BA006",
     codigo: "BA006",
@@ -268,7 +277,7 @@ export const productos = [
     categoria: "Baterías y Percusión",
     stock: 2,
     precio: 499990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1519892300165-cb5542fb47c7?w=600&q=80",
     descripcion: "Cascos de álamo de 9 capas, incluye platillos, soportes y sillín.",
     esOferta: false
   },
@@ -281,7 +290,7 @@ export const productos = [
     categoria: "Baterías y Percusión",
     stock: 4,
     precio: 429990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1516924962500-2b4b3b99ea02?w=600&q=80",
     descripcion: "Pads de malla completa, módulo con 40 kits y 385 sonidos.",
     esOferta: true
   },
@@ -294,7 +303,7 @@ export const productos = [
     categoria: "Baterías y Percusión",
     stock: 7,
     precio: 79990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1519892300165-cb5542fb47c7?w=600&q=80",
     descripcion: "Cuerpo de abedul báltico, bordonero interno ajustable.",
     esOferta: false
   },
@@ -307,7 +316,7 @@ export const productos = [
     categoria: "Baterías y Percusión",
     stock: 5,
     precio: 189990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1519892300165-cb5542fb47c7?w=600&q=80",
     descripcion: "Set de bronce: Hi-Hat 14\", Crash 16\", Ride 20\".",
     esOferta: false
   },
@@ -320,10 +329,12 @@ export const productos = [
     categoria: "Baterías y Percusión",
     stock: 4,
     precio: 69990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?w=600&q=80",
     descripcion: "Cuerpo sintético ligero, afinación mecánica, parche sintético.",
     esOferta: false
   },
+
+  // --- AMPLIFICADORES ---
   {
     id: "AM001",
     codigo: "AM001",
@@ -333,7 +344,7 @@ export const productos = [
     categoria: "Amplificadores",
     stock: 8,
     precio: 79990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1545454675-3531b543be5d?w=600&q=80",
     descripcion: "2 canales (limpio/distorsión), altavoz de 8\", salida auriculares.",
     esOferta: false
   },
@@ -346,7 +357,7 @@ export const productos = [
     categoria: "Amplificadores",
     stock: 4,
     precio: 279990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1558098329-a11cff621064?w=600&q=80",
     descripcion: "5 caracteres de amplificador, 60 efectos Boss, altavoz 12\".",
     esOferta: true
   },
@@ -359,7 +370,7 @@ export const productos = [
     categoria: "Amplificadores",
     stock: 3,
     precio: 219990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1516924962500-2b4b3b99ea02?w=600&q=80",
     descripcion: "40 vatios clase D, altavoz de 10\", circuito de overdrive conmutable.",
     esOferta: false
   },
@@ -372,7 +383,7 @@ export const productos = [
     categoria: "Amplificadores",
     stock: 2,
     precio: 599990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1563841930606-67e2bce48b78?w=600&q=80",
     descripcion: "100% valvular, válvulas ECC83 y 6V6, altavoz Celestion 12\".",
     esOferta: false
   },
@@ -385,10 +396,12 @@ export const productos = [
     categoria: "Amplificadores",
     stock: 6,
     precio: 139990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1545454675-3531b543be5d?w=600&q=80",
     descripcion: "Alimentado por baterías, entrada estéreo para micrófonos y teclados.",
     esOferta: false
   },
+
+  // --- PEDALES Y EFECTOS ---
   {
     id: "EF001",
     codigo: "EF001",
@@ -398,7 +411,7 @@ export const productos = [
     categoria: "Pedales y Efectos",
     stock: 12,
     precio: 59990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600&q=80",
     descripcion: "El pedal de distorsión más vendido de la historia. Tono versátil.",
     esOferta: false
   },
@@ -411,7 +424,7 @@ export const productos = [
     categoria: "Pedales y Efectos",
     stock: 7,
     precio: 89990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1525201548942-d8732f6617a0?w=600&q=80",
     descripcion: "Cálido y dinámico overdrive que realza medios, legendario.",
     esOferta: true
   },
@@ -424,7 +437,7 @@ export const productos = [
     categoria: "Pedales y Efectos",
     stock: 4,
     precio: 149990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1525201548942-d8732f6617a0?w=600&q=80",
     descripcion: "11 modos de delay y looper con tap tempo integrado.",
     esOferta: false
   },
@@ -437,7 +450,7 @@ export const productos = [
     categoria: "Pedales y Efectos",
     stock: 6,
     precio: 99990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1558098329-a11cff621064?w=600&q=80",
     descripcion: "Más de 70 efectos y modelos de amplificador, pedal de expresión.",
     esOferta: false
   },
@@ -450,10 +463,12 @@ export const productos = [
     categoria: "Pedales y Efectos",
     stock: 5,
     precio: 129990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=600&q=80",
     descripcion: "8 algoritmos de reverb estéreo, tecnología TonePrint, botón MASH.",
     esOferta: false
   },
+
+  // --- ACCESORIOS ---
   {
     id: "AC001",
     codigo: "AC001",
@@ -463,7 +478,7 @@ export const productos = [
     categoria: "Accesorios",
     stock: 25,
     precio: 7990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=600&q=80",
     descripcion: "Calibre 10-46 Regular Light, entorchado en níquel.",
     esOferta: false
   },
@@ -476,7 +491,7 @@ export const productos = [
     categoria: "Accesorios",
     stock: 20,
     precio: 8990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1550985616-10810253b84d?w=600&q=80",
     descripcion: "Bronce fosforado 92/8, calibre Light 12-54.",
     esOferta: false
   },
@@ -489,7 +504,7 @@ export const productos = [
     categoria: "Accesorios",
     stock: 15,
     precio: 19990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1445743432342-eac500ce72b7?w=600&q=80",
     descripcion: "Calibre 45-100, entorchado en níquel sobre núcleo hexagonal.",
     esOferta: false
   },
@@ -515,7 +530,7 @@ export const productos = [
     categoria: "Accesorios",
     stock: 12,
     precio: 29990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1525201548942-d8732f6617a0?w=600&q=80",
     descripcion: "Cuero genuino de 3.5\" de ancho, ajustable de 37\" a 50\".",
     esOferta: false
   },
@@ -528,7 +543,7 @@ export const productos = [
     categoria: "Accesorios",
     stock: 20,
     precio: 8990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1516924962500-2b4b3b99ea02?w=600&q=80",
     descripcion: "Afinador cromático de clip, pantalla giratoria.",
     esOferta: true
   },
@@ -541,7 +556,7 @@ export const productos = [
     categoria: "Accesorios",
     stock: 15,
     precio: 12990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1558098329-a11cff621064?w=600&q=80",
     descripcion: "Cable trenzado, conectores dorados, 3 metros.",
     esOferta: false
   },
@@ -554,7 +569,7 @@ export const productos = [
     categoria: "Accesorios",
     stock: 10,
     precio: 17990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1545454675-3531b543be5d?w=600&q=80",
     descripcion: "Cable trenzado, conectores dorados, 6 metros.",
     esOferta: false
   },
@@ -567,7 +582,7 @@ export const productos = [
     categoria: "Accesorios",
     stock: 12,
     precio: 22990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1541689592655-f5f52825a3b8?w=600&q=80",
     descripcion: "Soporte plegable con enganche automático.",
     esOferta: false
   },
@@ -580,10 +595,12 @@ export const productos = [
     categoria: "Accesorios",
     stock: 10,
     precio: 18990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=600&q=80",
     descripcion: "Montaje a pared, enganche automático.",
     esOferta: false
   },
+
+  // --- ESTUDIO Y GRABACIÓN ---
   {
     id: "ES001",
     codigo: "ES001",
@@ -593,7 +610,7 @@ export const productos = [
     categoria: "Estudio y Grabación",
     stock: 4,
     precio: 149990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=600&q=80",
     descripcion: "1 entrada XLR+instrumento, 2 salidas, 24bit/192kHz.",
     esOferta: true
   },
@@ -606,7 +623,7 @@ export const productos = [
     categoria: "Estudio y Grabación",
     stock: 6,
     precio: 79990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&q=80",
     descripcion: "Circumaurales, respuesta 15Hz-20kHz.",
     esOferta: false
   },
@@ -619,7 +636,7 @@ export const productos = [
     categoria: "Estudio y Grabación",
     stock: 4,
     precio: 219990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=600&q=80",
     descripcion: "Referencia de industria, sonido neutro y detallado.",
     esOferta: false
   },
@@ -632,7 +649,7 @@ export const productos = [
     categoria: "Estudio y Grabación",
     stock: 2,
     precio: 349990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1545454675-3531b543be5d?w=600&q=80",
     descripcion: "Altavoz activo, respuesta plana, ideal mezcla.",
     esOferta: true
   },
@@ -645,7 +662,7 @@ export const productos = [
     categoria: "Estudio y Grabación",
     stock: 8,
     precio: 14990,
-    imagen: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=600&q=80",
+    imagen: "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=600&q=80",
     descripcion: "Doble malla, brazo flexible con clip.",
     esOferta: false
   }
