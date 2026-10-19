@@ -1,10 +1,20 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import Boton from "../atoms/Boton";
+import BarraBusqueda from "../molecules/BarraBusqueda";
 import { useTienda } from '../../context/TiendaContext';
 
 function Navbar() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { usuarioActivo, cerrarSesion, cantidadTotalItems } = useTienda();
+
+  const buscar = (texto) => {
+    if (texto) {
+      navigate(`/catalogo?buscar=${encodeURIComponent(texto)}`);
+    } else {
+      navigate("/catalogo");
+    }
+  };
 
   return (
     <header className="header-sonido-vivo">
@@ -15,11 +25,16 @@ function Navbar() {
         </Link>
       </div>
 
+      <BarraBusqueda
+        valorInicial={searchParams.get("buscar") || ""}
+        onBuscar={buscar}
+      />
+
       <nav className="menu-navegacion">
         <ul>
           <li><Boton texto="Catálogo" className="btn-sonido-vivo" onClick={() => navigate("/catalogo")} /></li>
           <li><Boton texto="Ofertas" className="btn-sonido-vivo" onClick={() => navigate("/ofertas")} /></li>
-                    
+
           {(!usuarioActivo || usuarioActivo.rol === "Cliente") && (
             <li><Boton texto={`Carrito (${cantidadTotalItems})`} className="btn-sonido-vivo" onClick={() => navigate("/carrito")} /></li>
           )}

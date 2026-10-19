@@ -1145,6 +1145,41 @@ footer.footer-sonido-vivo a {
   margin: 0;
 }
 
+/* Molécula: BarraBusqueda */
+.barra-busqueda {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  max-width: 420px;
+  margin: 0 24px;
+}
+
+.barra-busqueda .form-control {
+  background-color: var(--fondo-input);
+  border: 1px solid var(--borde-oro);
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 14px;
+}
+
+.barra-busqueda .btn-sonido-vivo {
+  border-radius: 20px;
+  padding: 8px 16px;
+}
+
+@media (max-width: 950px) {
+  .barra-busqueda {
+    order: 3;
+    max-width: 100%;
+    width: 100%;
+    margin: 10px 0 0 0;
+  }
+  .header-sonido-vivo {
+    flex-wrap: wrap;
+  }
+}
+
 @media (max-width: 600px) {
   .lista-pedidos {
     grid-template-columns: 1fr;
