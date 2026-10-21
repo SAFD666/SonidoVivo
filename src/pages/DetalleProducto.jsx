@@ -42,7 +42,7 @@ function DetalleProducto() {
 
   return (
     <PlantillaPublica>
-      <main className="contenedor-principal">
+      <section className="contenedor-principal">
         <article className="ficha-detalle-card">
           <figure className="ficha-imagen-marco">
             <img
@@ -97,7 +97,7 @@ function DetalleProducto() {
             </footer>
           </section>
         </article>
-      </main>
+      </section>
     </PlantillaPublica>
   );
 }

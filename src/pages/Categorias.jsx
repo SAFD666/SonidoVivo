@@ -57,7 +57,7 @@ function Categorias() {
 
   return (
     <PlantillaPublica>
-      <main className="contenedor-principal">
+      <section className="contenedor-principal">
         <header className="cabecera-categoria">
           <h1 className="titulo-seccion">{nombreCategoria}</h1>
           <p className="subtitulo-catalogo">
@@ -108,7 +108,7 @@ function Categorias() {
             />
           </section>
         )}
-      </main>
+      </section>
     </PlantillaPublica>
   );
 }

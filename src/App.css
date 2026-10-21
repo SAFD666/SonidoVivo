@@ -1186,6 +1186,127 @@ footer.footer-sonido-vivo a {
   }
 }
 
+
+/* === Plantilla Admin === */
+.plantilla-admin {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+  text-align: left;
+}
+
+.admin-sidebar {
+  background: linear-gradient(180deg, #1b1b1e 0%, #0b0b0c 100%);
+  border-right: 1px solid var(--borde-suave);
+  padding: 25px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.admin-marca {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.admin-marca img {
+  height: 38px;
+  border-radius: 6px;
+  border: 1px solid var(--borde-oro);
+}
+
+.admin-marca p {
+  margin: 0;
+  font-family: var(--fuente-titulos);
+  font-size: 18px;
+  color: var(--oro-claro);
+}
+
+.admin-menu {
+  flex: 1;
+}
+
+.admin-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.admin-menu a {
+  display: block;
+  padding: 10px 14px;
+  border-radius: 8px;
+  color: var(--color-texto);
+  border: 1px solid transparent;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.admin-menu a:hover {
+  background: rgba(212, 169, 90, 0.08);
+  border-color: var(--borde-suave);
+}
+
+.admin-menu a.active {
+  background: rgba(212, 169, 90, 0.15);
+  border-color: var(--borde-oro);
+  color: var(--oro-claro);
+  font-weight: bold;
+}
+
+.admin-usuario {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 15px;
+  border-top: 1px solid var(--borde-suave);
+}
+
+.admin-usuario p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--color-texto);
+}
+
+.admin-usuario .admin-rol {
+  color: var(--oro);
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.admin-contenido {
+  padding: 30px;
+  min-width: 0;
+}
+
+.admin-cabecera h1 {
+  font-size: 28px;
+  margin: 0 0 20px 0;
+  text-align: left;
+  letter-spacing: normal;
+}
+
+@media (max-width: 850px) {
+  .plantilla-admin {
+    grid-template-columns: 1fr;
+  }
+  .admin-sidebar {
+    position: static;
+    height: auto;
+    gap: 15px;
+  }
+  .admin-menu ul {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
 @media (max-width: 600px) {
   .header-sonido-vivo {
     flex-direction: column;

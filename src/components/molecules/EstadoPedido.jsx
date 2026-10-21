@@ -5,6 +5,8 @@ const CLASES_ESTADO = {
     "Cancelado": "estado-cancelado",
 };
 
+export const ESTADOS_PEDIDO = Object.keys(CLASES_ESTADO);
+
 function EstadoPedido({ estado }) {
     return (
         <span className={`estado-pedido ${CLASES_ESTADO[estado] || ""}`}>
