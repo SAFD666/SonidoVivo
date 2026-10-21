@@ -1539,6 +1539,44 @@ footer.footer-sonido-vivo a {
   font-weight: bold;
 }
 
+/* Dashboard: indicadores  */
+.indicador {
+  height: 100%;
+  background: #24242b;
+  border: 1px solid var(--borde-oro);
+  border-radius: 12px;
+  padding: 18px 20px;
+}
+
+.indicador h3 {
+  font-family: var(--fuente-texto);
+  font-size: 14px;
+  text-transform: uppercase;
+  color: #c9c2b6;
+  margin: 0 0 6px 0;
+}
+
+.indicador p {
+  margin: 0;
+  font-size: 13px;
+  color: #c9c2b6;
+}
+
+.indicador strong {
+  font-family: var(--fuente-titulos);
+  font-size: 30px;
+  color: var(--oro-claro);
+}
+
+.indicador.alerta {
+  border-color: #ff8a95;
+}
+
+.indicador.alerta p:last-child {
+  color: #ff8a95;
+  font-weight: bold;
+}
+
 @media (max-width: 700px) {
   .formulario-grilla,
   .formulario-grilla-imagen {

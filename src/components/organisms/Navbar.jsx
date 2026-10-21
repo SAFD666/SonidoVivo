@@ -44,7 +44,7 @@ function Navbar() {
               {usuarioActivo.rol === "Cliente" ? (
                 <li><Boton texto="Mis Pedidos" className="btn-sonido-vivo" onClick={() => navigate("/mis-pedidos")} /></li>
               ) : (
-                <li><Boton texto="Panel Admin" className="btn-sonido-vivo" onClick={() => navigate("/admin/productos")} /></li>
+                <li><Boton texto="Panel Admin" className="btn-sonido-vivo" onClick={() => navigate("/admin")} /></li>
               )}
 
               <li><Boton texto={`Salir (${usuarioActivo.nombre.split(' ')[0]})`} className="btn-sonido-vivo" onClick={() => { cerrarSesion(); navigate("/"); }} /></li>

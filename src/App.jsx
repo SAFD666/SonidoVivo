@@ -14,6 +14,8 @@ import PagoFallido from './pages/PagoFallido';
 import MisPedidos from './pages/MisPedidos';
 import AdminProductos from './pages/AdminProductos';
 import AdminPedidos from './pages/AdminPedidos';
+import AdminDashboard from './pages/AdminDashboard';
+import AdminCriticos from './pages/AdminCriticos';
 import './App.css';
 
 const ROLES_ADMIN = ["Administrador", "Vendedor"];
@@ -40,6 +42,8 @@ function App() {
         {/* Rutas solo para Administrador y Vendedor */}
         <Route path="/admin/productos" element={<RutaProtegida roles={ROLES_ADMIN}><AdminProductos /></RutaProtegida>} />
         <Route path="/admin/pedidos" element={<RutaProtegida roles={ROLES_ADMIN}><AdminPedidos /></RutaProtegida>} />
+        <Route path="/admin" element={<RutaProtegida roles={ROLES_ADMIN}><AdminDashboard /></RutaProtegida>} />
+        <Route path="/admin/criticos" element={<RutaProtegida roles={ROLES_ADMIN}><AdminCriticos /></RutaProtegida>} />
       </Routes>
     </TiendaProvider>
   );

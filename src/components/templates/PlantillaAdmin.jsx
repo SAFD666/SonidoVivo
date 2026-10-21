@@ -16,9 +16,12 @@ function PlantillaAdmin({ titulo, children }) {
 
         <nav className="admin-menu" aria-label="Secciones del panel">
           <ul>
+            <li><NavLink to="/admin" end>Inicio</NavLink></li>
             <li><NavLink to="/admin/productos">Productos</NavLink></li>
+            <li><NavLink to="/admin/criticos">Stock crítico</NavLink></li>
             <li><NavLink to="/admin/pedidos">Pedidos</NavLink></li>
             <li><NavLink to="/" end>Ir a la tienda</NavLink></li>
+            
           </ul>
         </nav>
 

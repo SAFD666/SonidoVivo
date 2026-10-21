@@ -43,7 +43,9 @@ function TablaProductos({ productos, onEditar, onEliminar }) {
                   {onEditar && (
                     <Boton texto="Editar" className="btn btn-sm btn-outline-warning" onClick={() => onEditar(p)} />
                   )}
-                  <Boton texto="Eliminar" className="btn btn-sm btn-outline-danger" onClick={() => onEliminar(p)} />
+                    {onEliminar && (
+                    <Boton texto="Eliminar" className="btn btn-sm btn-outline-danger" onClick={() => onEliminar(p)} />
+                  )}
                 </div>
               </td>
             </tr>

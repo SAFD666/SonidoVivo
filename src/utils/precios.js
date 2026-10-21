@@ -11,3 +11,5 @@ export function calcularTotal(items) {
 export function contarUnidades(items) {
   return items.reduce((total, item) => total + item.cantidad, 0)
 }
+
+export const STOCK_CRITICO = 3

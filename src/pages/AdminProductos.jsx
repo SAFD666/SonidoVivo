@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
 import PlantillaAdmin from '../components/templates/PlantillaAdmin';
 import TablaProductos from '../components/organisms/TablaProductos';
 import FormularioProducto from '../components/organisms/FormularioProducto';
@@ -9,8 +10,14 @@ import { useTienda } from '../context/TiendaContext';
 function AdminProductos() {
   const { productos, guardarProducto, eliminarProducto } = useTienda();
   const [busqueda, setBusqueda] = useState("");
-  const [formulario, setFormulario] = useState(null); // null = cerrado | { producto: null } = nuevo | { producto } = editar
   const [mensaje, setMensaje] = useState("");
+  const location = useLocation();
+
+  // Si llegamos desde otra pagina con un producto para editar, el formulario parte abierto
+  const [formulario, setFormulario] = useState(() => {
+    const productoAEditar = productos.find((p) => p.codigo === location.state?.editar);
+    return productoAEditar ? { producto: productoAEditar } : null; // null = cerrado | { producto: null } = nuevo | { producto } = editar
+  });
 
   const productosVisibles = useMemo(() => {
     const termino = busqueda.trim().toLowerCase();

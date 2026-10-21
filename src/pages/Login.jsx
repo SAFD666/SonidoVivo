@@ -50,7 +50,8 @@ function Login() {
       : iniciarSesion(datos.correo.trim(), datos.password);
 
     if (resultado.exito) {
-      navigate(destino, { replace: true });
+      const destinoPorRol = resultado.usuario.rol === "Cliente" ? "/" : "/admin";
+      navigate(location.state?.desde || destinoPorRol, { replace: true });
     } else {
       setMensajeError(resultado.mensaje);
     }
