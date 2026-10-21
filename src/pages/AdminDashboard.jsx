@@ -64,7 +64,9 @@ function AdminDashboard() {
               <tbody>
                 {ultimosPedidos.map((pedido) => (
                   <tr key={pedido.id}>
-                    <th scope="row">{pedido.id}</th>
+                    <th scope="row">
+                      <Link to={`/admin/pedidos/${pedido.id}`} className="enlace-texto">{pedido.id}</Link>
+                    </th>
                     <td>{pedido.clienteNombre}</td>
                     <td><time dateTime={pedido.fecha}>{pedido.fecha}</time></td>
                     <td><EstadoPedido estado={pedido.estado} /></td>

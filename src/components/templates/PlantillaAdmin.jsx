@@ -8,7 +8,7 @@ function PlantillaAdmin({ titulo, children }) {
 
   return (
     <div className="plantilla-admin">
-      <aside className="admin-sidebar" aria-label="Menú de administración">
+      <aside className="admin-sidebar d-print-none" aria-label="Menú de administración">
         <header className="admin-marca">
           <img src="/img/logotipo.jpg" alt="Logo Sonido Vivo" />
           <p>Panel Sonido Vivo</p>

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import EstadoPedido, { ESTADOS_PEDIDO } from "../molecules/EstadoPedido";
 import Selector from "../atoms/Selector";
 
@@ -23,7 +24,9 @@ function TablaPedidos({ pedidos, onCambiarEstado }) {
         <tbody>
           {pedidos.map((pedido) => (
             <tr key={pedido.id}>
-              <th scope="row">{pedido.id}</th>
+              <th scope="row">
+                <Link to={`/admin/pedidos/${pedido.id}`} className="enlace-texto">{pedido.id}</Link>
+              </th>
               <td><time dateTime={pedido.fecha}>{pedido.fecha}</time></td>
               <td>
                 {pedido.clienteNombre}
