@@ -1,33 +1,39 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 import PlantillaPublica from '../components/templates/PlantillaPublica';
 import FiltroCategoria from "../components/molecules/FiltroCategoria";
 import CatalogoProductos from '../components/organisms/CatalogoProductos';
 import Boton from '../components/atoms/Boton';
-
-import { productos, generarSlug } from '../data/productos';
+import { generarSlug } from '../data/productos';
+import { useTienda } from '../context/TiendaContext';
 
 function Categorias() {
   const { slug } = useParams();
   const navigate = useNavigate();
+  const { productos } = useTienda();
+
+  const [marcasSeleccionadas, setMarcasSeleccionadas] = useState([]);
+  const [marcasAplicadas, setMarcasAplicadas] = useState([]);
+
+  // Al cambiar de categoria, se limpian los filtros
+  useEffect(() => {
+    setMarcasSeleccionadas([]);
+    setMarcasAplicadas([]);
+  }, [slug]);
 
   const productosBaseCategoria = useMemo(() => {
     return productos.filter((prod) => generarSlug(prod.categoria) === slug);
-  }, [slug]);
+  }, [productos, slug]);
 
   const marcasDisponibles = useMemo(() => {
-    const listaMarcas = productosBaseCategoria.map((p) => p.marca);
-    return [...new Set(listaMarcas)];
+    return [...new Set(productosBaseCategoria.map((p) => p.marca))];
   }, [productosBaseCategoria]);
 
-  const [marcasSeleccionadas, setMarcasSeleccionadas] = useState([]);
-  const [productosVisibles, setProductosVisibles] = useState(productosBaseCategoria);
-
-  useEffect(() => {
-    setMarcasSeleccionadas([]);
-    setProductosVisibles(productosBaseCategoria);
-  }, [productosBaseCategoria]);
+  const productosVisibles = useMemo(() => {
+    if (marcasAplicadas.length === 0) return productosBaseCategoria;
+    return productosBaseCategoria.filter((p) => marcasAplicadas.includes(p.marca));
+  }, [productosBaseCategoria, marcasAplicadas]);
 
   const toggleMarca = (marca) => {
     if (marcasSeleccionadas.includes(marca)) {
@@ -38,13 +44,12 @@ function Categorias() {
   };
 
   const aplicarFiltros = () => {
-    if (marcasSeleccionadas.length === 0) {
-      setProductosVisibles(productosBaseCategoria);
-    } else {
-      setProductosVisibles(
-        productosBaseCategoria.filter((p) => marcasSeleccionadas.includes(p.marca))
-      );
-    }
+    setMarcasAplicadas(marcasSeleccionadas);
+  };
+
+  const restablecer = () => {
+    setMarcasSeleccionadas([]);
+    setMarcasAplicadas([]);
   };
 
   const handleVerDetalle = (producto) => {
@@ -53,7 +58,7 @@ function Categorias() {
 
   const nombreCategoria = productosBaseCategoria.length > 0
     ? productosBaseCategoria[0].categoria
-    : slug ? slug.replace(/-/g, ' ').toUpperCase() : 'Categoría';
+    : slug ? slug.replace(/-/g, ' ') : 'Categoría';
 
   return (
     <PlantillaPublica>
@@ -85,14 +90,7 @@ function Categorias() {
               ) : (
                 <div className="aviso-no-encontrado">
                   <p>No se encontraron productos para las marcas seleccionadas.</p>
-                  <Boton
-                    texto="Restablecer Filtros"
-                    onClick={() => {
-                      setMarcasSeleccionadas([]);
-                      setProductosVisibles(productosBaseCategoria);
-                    }}
-                    className="btn-sonido-vivo"
-                  />
+                  <Boton texto="Restablecer Filtros" onClick={restablecer} className="btn-sonido-vivo" />
                 </div>
               )}
             </section>
@@ -101,11 +99,7 @@ function Categorias() {
           <section className="aviso-no-encontrado">
             <h2>No hay productos en esta categoría</h2>
             <p>Por el momento no disponemos de stock para la categoría seleccionada.</p>
-            <Boton
-              texto="Ver Todo el Catálogo"
-              className="btn-sonido-vivo"
-              onClick={() => navigate("/catalogo")}
-            />
+            <Boton texto="Ver Todo el Catálogo" className="btn-sonido-vivo" onClick={() => navigate("/catalogo")} />
           </section>
         )}
       </section>
