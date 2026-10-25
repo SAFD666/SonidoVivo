@@ -17,6 +17,7 @@ import AdminPedidos from './pages/AdminPedidos';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminCriticos from './pages/AdminCriticos';
 import AdminComprobante from './pages/AdminComprobante';
+import AdminUsuarios from './pages/AdminUsuarios';
 import './App.css';
 
 const ROLES_ADMIN = ["Administrador", "Vendedor"];
@@ -46,6 +47,7 @@ function App() {
         <Route path="/admin" element={<RutaProtegida roles={ROLES_ADMIN}><AdminDashboard /></RutaProtegida>} />
         <Route path="/admin/criticos" element={<RutaProtegida roles={ROLES_ADMIN}><AdminCriticos /></RutaProtegida>} />
         <Route path="/admin/pedidos/:id" element={<RutaProtegida roles={ROLES_ADMIN}><AdminComprobante /></RutaProtegida>} />
+        <Route path="/admin/usuarios" element={<RutaProtegida roles={["Administrador"]}><AdminUsuarios /></RutaProtegida>} />
       </Routes>
     </TiendaProvider>
   );

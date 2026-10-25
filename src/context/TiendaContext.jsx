@@ -94,6 +94,29 @@ export function TiendaProvider({ children }) {
     setUsuarioActivo(null);
     setCarrito([]);
   };
+    // administracion de usuarios
+  const guardarUsuario = (datos) => {
+    const correoRepetido = usuarios.some(
+      (u) => u.correo.toLowerCase() === datos.correo.toLowerCase() && u.id !== datos.id
+    );
+    if (correoRepetido) {
+      return { exito: false, mensaje: "Ya existe un usuario con ese correo." };
+    }
+
+    // Si la contraseña viene vacía (al editar), se conserva la actual
+    const { password, ...resto } = datos;
+    const cambios = password ? datos : resto;
+
+    if (datos.id) {
+      setUsuarios((prev) => prev.map((u) => (u.id === datos.id ? { ...u, ...cambios } : u)));
+      if (usuarioActivo?.id === datos.id) {
+        setUsuarioActivo((prev) => ({ ...prev, ...cambios }));
+      }
+    } else {
+      setUsuarios((prev) => [...prev, { ...datos, id: Date.now() }]);
+    }
+    return { exito: true };
+  };
 
   // --- FUNCIONES DEL CARRITO ---
   const agregarAlCarrito = (producto, cantidad = 1) => {

@@ -20,6 +20,9 @@ function PlantillaAdmin({ titulo, children }) {
             <li><NavLink to="/admin/productos">Productos</NavLink></li>
             <li><NavLink to="/admin/criticos">Stock crítico</NavLink></li>
             <li><NavLink to="/admin/pedidos">Pedidos</NavLink></li>
+            {usuarioActivo?.rol === "Administrador" && (
+              <li><NavLink to="/admin/usuarios">Usuarios</NavLink></li>
+            )}
             <li><NavLink to="/" end>Ir a la tienda</NavLink></li>
             
           </ul>
