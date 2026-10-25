@@ -18,6 +18,7 @@ function PlantillaAdmin({ titulo, children }) {
           <ul>
             <li><NavLink to="/admin" end>Inicio</NavLink></li>
             <li><NavLink to="/admin/productos">Productos</NavLink></li>
+            <li><NavLink to="/admin/categorias">Categorías</NavLink></li>
             <li><NavLink to="/admin/criticos">Stock crítico</NavLink></li>
             <li><NavLink to="/admin/pedidos">Pedidos</NavLink></li>
             <li><NavLink to="/admin/reportes">Reportes</NavLink></li>

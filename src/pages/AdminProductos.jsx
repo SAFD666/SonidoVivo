@@ -8,12 +8,12 @@ import Boton from '../components/atoms/Boton';
 import { useTienda } from '../context/TiendaContext';
 
 function AdminProductos() {
-  const { productos, guardarProducto, eliminarProducto } = useTienda();
+  const { productos, categorias, guardarProducto, eliminarProducto } = useTienda();
+  const location = useLocation();
   const [busqueda, setBusqueda] = useState("");
   const [mensaje, setMensaje] = useState("");
-  const location = useLocation();
 
-  // Si llegamos desde otra pagina con un producto para editar, el formulario parte abierto
+  // Si llegamos desde otra página con un producto para editar, el formulario parte abierto
   const [formulario, setFormulario] = useState(() => {
     const productoAEditar = productos.find((p) => p.codigo === location.state?.editar);
     return productoAEditar ? { producto: productoAEditar } : null; // null = cerrado | { producto: null } = nuevo | { producto } = editar
@@ -78,6 +78,7 @@ function AdminProductos() {
           <FormularioProducto
             key={formulario.producto?.codigo || "nuevo"}
             productoInicial={formulario.producto}
+            categorias={categorias}
             codigosExistentes={productos.map((p) => p.codigo)}
             onGuardar={guardar}
             onCancelar={cerrarFormulario}
@@ -86,7 +87,7 @@ function AdminProductos() {
       )}
 
       <section className="admin-bloque">
-        <h2 id="titulo-filtros-productos" className="visually-hidden">Buscar productos</h2>
+        <h2 className="visually-hidden">Buscar productos</h2>
 
         <form className="filtros-admin" onSubmit={(e) => e.preventDefault()}>
           <fieldset>
@@ -105,7 +106,7 @@ function AdminProductos() {
       </section>
 
       <section className="admin-bloque">
-        <h2 id="titulo-listado-productos" className="visually-hidden">Listado de productos</h2>
+        <h2 className="visually-hidden">Listado de productos</h2>
 
         {productosVisibles.length > 0 ? (
           <TablaProductos

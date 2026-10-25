@@ -2,13 +2,23 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { pedidosIniciales } from '../data/pedidos';
 import { usuariosIniciales } from '../data/usuarios';
 import * as productosService from '../services/ProductosService';
+import { categoriasIniciales } from '../data/categorias';
 
 const TiendaContext = createContext();
 
 export function TiendaProvider({ children }) {
   
-  // 1. Estado de Productos (los datos los entrega el servicio)
+  // Estado de Productos (los datos los entrega el servicio)
   const [listaProductos, setListaProductos] = useState(() => productosService.listarProductos());
+    // Estado de Categorías (con persistencia en localStorage)
+    const [categorias, setCategorias] = useState(() => {
+    const guardadas = localStorage.getItem('sv_categorias');
+    return guardadas ? JSON.parse(guardadas) : categoriasIniciales;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('sv_categorias', JSON.stringify(categorias));
+  }, [categorias]);
 
   // 2. Estado del Carrito
   const [carrito, setCarrito] = useState(() => {
@@ -217,6 +227,32 @@ export function TiendaProvider({ children }) {
     setListaProductos(productosService.eliminarProducto(codigo));
   };
 
+  
+  // funcion para categoria
+  const guardarCategoria = (nombreOriginal, datos) => {
+    const nombre = datos.nombre.trim();
+    const repetida = categorias.some(
+      (c) => c.nombre.toLowerCase() === nombre.toLowerCase() && c.nombre !== nombreOriginal
+    );
+    if (repetida) {
+      return { exito: false, mensaje: "Ya existe una categoría con ese nombre." };
+    }
+
+    const categoria = { nombre, imagen: datos.imagen.trim() || "/img/logotipo.jpg" };
+
+    if (nombreOriginal) {
+      setCategorias((prev) => prev.map((c) => (c.nombre === nombreOriginal ? categoria : c)));
+      // Si se renombró, los productos de esa categoría se actualizan
+      if (nombreOriginal !== nombre) {
+        setListaProductos((prev) =>
+          prev.map((p) => (p.categoria === nombreOriginal ? { ...p, categoria: nombre } : p))
+        );
+      }
+    } else {
+      setCategorias((prev) => [...prev, categoria]);
+    }
+    return { exito: true };
+  };
 
   return (
     <TiendaContext.Provider
@@ -225,12 +261,14 @@ export function TiendaProvider({ children }) {
         carrito,
         pedidos,
         usuarios,
+        categorias,
         usuarioActivo,
         totalCarrito,
         cantidadTotalItems,
         iniciarSesion,
         registrarUsuario,
         cerrarSesion,
+        guardarUsuario,
         agregarAlCarrito,
         cambiarCantidadCarrito,
         eliminarDelCarrito,
@@ -238,7 +276,8 @@ export function TiendaProvider({ children }) {
         crearPedido,
         cambiarEstadoPedido,
         guardarProducto,
-        eliminarProducto
+        eliminarProducto,
+        guardarCategoria
       }}
     >
       {children}

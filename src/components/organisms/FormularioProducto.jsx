@@ -3,36 +3,12 @@ import CampoFormulario from "../molecules/CampoFormulario";
 import Selector from "../atoms/Selector";
 import Boton from "../atoms/Boton";
 
-export const CATEGORIAS_PRODUCTO = [
-  "Guitarras Acústicas",
-  "Guitarras Eléctricas",
-  "Bajos",
-  "Baterías y Percusión",
-  "Teclados y Pianos",
-  "Amplificadores",
-  "Pedales y Efectos",
-  "Estudio y Grabación",
-  "Accesorios",
-];
-
-const IMAGEN_POR_CATEGORIA = {
-  "Guitarras Acústicas": "/img/acustica.png",
-  "Guitarras Eléctricas": "/img/electrica.png",
-  "Bajos": "/img/bajo electrico.png",
-  "Baterías y Percusión": "/img/baterias.png",
-  "Teclados y Pianos": "/img/pianos y teclados.png",
-  "Amplificadores": "/img/amplificadores.png",
-  "Pedales y Efectos": "/img/pedales de efecto.png",
-  "Estudio y Grabación": "/img/estudio y grabacion.png",
-  "Accesorios": "/img/accesorios.png",
-};
-
 const PRODUCTO_VACIO = {
   codigo: "",
   nombre: "",
   marca: "",
   modelo: "",
-  categoria: CATEGORIAS_PRODUCTO[0],
+  categoria: "",
   precio: "",
   stock: "",
   imagen: "",
@@ -40,12 +16,17 @@ const PRODUCTO_VACIO = {
   esOferta: false,
 };
 
-function FormularioProducto({ productoInicial, codigosExistentes = [], onGuardar, onCancelar }) {
+function FormularioProducto({ productoInicial, categorias = [], codigosExistentes = [], onGuardar, onCancelar }) {
   const esEdicion = Boolean(productoInicial);
   const [datos, setDatos] = useState(
-    productoInicial ? { ...PRODUCTO_VACIO, ...productoInicial } : PRODUCTO_VACIO
+    productoInicial
+      ? { ...PRODUCTO_VACIO, ...productoInicial }
+      : { ...PRODUCTO_VACIO, categoria: categorias[0]?.nombre || "" }
   );
   const [errores, setErrores] = useState({});
+
+  const imagenDeCategoria = (nombre) =>
+    categorias.find((c) => c.nombre === nombre)?.imagen || "/img/logotipo.jpg";
 
   const cambiar = (e) => {
     const { name, value, type, checked } = e.target;
@@ -93,17 +74,15 @@ function FormularioProducto({ productoInicial, codigosExistentes = [], onGuardar
       descripcion: datos.descripcion.trim(),
       precio: Number(datos.precio),
       stock: Number(datos.stock),
-      imagen: datos.imagen.trim() || IMAGEN_POR_CATEGORIA[datos.categoria],
+      imagen: datos.imagen.trim() || imagenDeCategoria(datos.categoria),
     });
   };
 
-  const vistaPrevia = datos.imagen.trim() || IMAGEN_POR_CATEGORIA[datos.categoria];
+  const vistaPrevia = datos.imagen.trim() || imagenDeCategoria(datos.categoria);
 
   return (
     <form className="formulario-producto" onSubmit={enviar} noValidate>
-      <h2 id="titulo-form-producto">
-        {esEdicion ? `Editar producto ${datos.codigo}` : "Nuevo producto"}
-      </h2>
+      <h2>{esEdicion ? `Editar producto ${datos.codigo}` : "Nuevo producto"}</h2>
 
       <fieldset>
         <legend>Identificación</legend>
@@ -124,7 +103,7 @@ function FormularioProducto({ productoInicial, codigosExistentes = [], onGuardar
 
           <div className="mb-3 campo-formulario">
             <label className="form-label" htmlFor="categoria">Categoría</label>
-            <Selector id="categoria" name="categoria" value={datos.categoria} onChange={cambiar} opciones={CATEGORIAS_PRODUCTO} />
+            <Selector id="categoria" name="categoria" value={datos.categoria} onChange={cambiar} opciones={categorias.map((c) => c.nombre)} />
           </div>
         </div>
       </fieldset>
