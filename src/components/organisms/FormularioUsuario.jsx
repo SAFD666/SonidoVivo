@@ -43,7 +43,7 @@ function FormularioUsuario({ usuarioInicial, esUsuarioActual = false, onGuardar,
   };
 
   return (
-    <form className="card card-body mb-4" onSubmit={enviar} noValidate aria-labelledby="titulo-form-usuario">
+    <form className="card card-body mb-4" onSubmit={enviar} noValidate>
       <h2 id="titulo-form-usuario" className="h5 mb-3">
         {esEdicion ? `Editar usuario: ${usuarioInicial.nombre}` : "Nuevo usuario"}
       </h2>

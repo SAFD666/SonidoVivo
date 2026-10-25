@@ -1577,6 +1577,21 @@ footer.footer-sonido-vivo a {
   font-weight: bold;
 }
 
+/*  Tarjetas de Bootstrap con los colores del tema */
+.card {
+  --bs-card-bg: #24242b;
+  --bs-card-border-color: var(--borde-oro);
+  --bs-card-color: var(--color-texto);
+  border-radius: 12px;
+}
+
+.card .form-control,
+.card .form-select {
+  background-color: #2f2f37;
+  color: #f2ede4;
+  border-color: var(--borde-oro);
+}
+
 @media (max-width: 700px) {
   .formulario-grilla,
   .formulario-grilla-imagen {

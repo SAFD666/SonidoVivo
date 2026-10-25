@@ -22,7 +22,7 @@ function AdminDashboard() {
 
   return (
     <PlantillaAdmin titulo="Panel de control">
-      <section aria-labelledby="titulo-indicadores" className="admin-bloque">
+      <section className="admin-bloque">
         <h2 id="titulo-indicadores" className="visually-hidden">Indicadores de la tienda</h2>
 
         <div className="row g-3">
@@ -47,7 +47,7 @@ function AdminDashboard() {
       </section>
 
       <div className="row g-4">
-        <section aria-labelledby="titulo-ultimos" className="col-12 col-lg-8">
+        <section className="col-12 col-lg-8">
           <h2 id="titulo-ultimos" className="h5 mb-3">Últimos pedidos</h2>
 
           <div className="table-responsive">
@@ -80,7 +80,7 @@ function AdminDashboard() {
           <Link to="/admin/pedidos" className="enlace-texto">Ver todos los pedidos</Link>
         </section>
 
-        <section aria-labelledby="titulo-accesos" className="col-12 col-lg-4">
+        <section className="col-12 col-lg-4">
           <h2 id="titulo-accesos" className="h5 mb-3">Accesos rápidos</h2>
 
           <nav aria-label="Accesos rápidos">

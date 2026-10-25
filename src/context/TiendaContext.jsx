@@ -1,16 +1,14 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { productos as productosBase } from '../data/productos';
 import { pedidosIniciales } from '../data/pedidos';
 import { usuariosIniciales } from '../data/usuarios';
+import * as productosService from '../services/ProductosService';
 
 const TiendaContext = createContext();
 
 export function TiendaProvider({ children }) {
-  // 1. Estado de Productos (con persistencia en localStorage)
-  const [listaProductos, setListaProductos] = useState(() => {
-    const guardados = localStorage.getItem('sv_productos');
-    return guardados ? JSON.parse(guardados) : productosBase;
-  });
+  
+  // 1. Estado de Productos (los datos los entrega el servicio)
+  const [listaProductos, setListaProductos] = useState(() => productosService.listarProductos());
 
   // 2. Estado del Carrito
   const [carrito, setCarrito] = useState(() => {
@@ -205,22 +203,20 @@ export function TiendaProvider({ children }) {
     );
   };
 
-  // --- FUNCIONES ADMIN CRUD PRODUCTOS ---
-  const guardarProducto = (productoEditado) => {
-    setListaProductos((prev) => {
-      const existe = prev.some((p) => p.codigo === productoEditado.codigo);
-      if (existe) {
-        return prev.map((p) =>
-          p.codigo === productoEditado.codigo ? { ...p, ...productoEditado } : p
-        );
-      }
-      return [{ ...productoEditado, id: productoEditado.codigo }, ...prev];
-    });
+  
+  //  FUNCIONES ADMIN CRUD PRODUCTOS (usando ahora el servicio) 
+  const guardarProducto = (producto) => {
+    const existe = listaProductos.some((p) => p.codigo === producto.codigo);
+    const nuevaLista = existe
+      ? productosService.actualizarProducto(producto.codigo, producto)
+      : productosService.crearProducto(producto);
+    setListaProductos(nuevaLista);
   };
 
   const eliminarProducto = (codigo) => {
-    setListaProductos((prev) => prev.filter((p) => p.codigo !== codigo));
+    setListaProductos(productosService.eliminarProducto(codigo));
   };
+
 
   return (
     <TiendaContext.Provider

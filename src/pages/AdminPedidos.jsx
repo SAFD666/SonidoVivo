@@ -32,7 +32,7 @@ function AdminPedidos() {
 
   return (
     <PlantillaAdmin titulo="Gestión de pedidos">
-      <section aria-labelledby="titulo-filtros-pedidos" className="admin-bloque">
+      <section className="admin-bloque">
         <h2 id="titulo-filtros-pedidos" className="visually-hidden">Filtros de pedidos</h2>
 
         <form className="filtros-admin" onSubmit={(e) => e.preventDefault()}>
@@ -65,7 +65,7 @@ function AdminPedidos() {
         </form>
       </section>
 
-      <section aria-labelledby="titulo-listado-pedidos" className="admin-bloque">
+      <section className="admin-bloque">
         <h2 id="titulo-listado-pedidos" className="visually-hidden">Listado de pedidos</h2>
 
         {pedidosVisibles.length > 0 ? (

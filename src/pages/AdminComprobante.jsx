@@ -38,7 +38,7 @@ function AdminComprobante() {
             </p>
           </header>
 
-          <section aria-labelledby="titulo-cliente" className="mb-4">
+          <section className="mb-4">
             <h3 id="titulo-cliente" className="h6">Datos del cliente</h3>
             <dl className="resultado-datos">
               <div><dt>Nombre</dt><dd>{pedido.clienteNombre}</dd></div>
@@ -49,7 +49,7 @@ function AdminComprobante() {
             </dl>
           </section>
 
-          <section aria-labelledby="titulo-detalle" className="mb-4">
+          <section className="mb-4">
             <h3 id="titulo-detalle" className="h6">Detalle de la compra</h3>
             <div className="table-responsive">
               <table className="table align-middle tabla-admin">

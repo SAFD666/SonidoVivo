@@ -20,7 +20,7 @@ function AdminCriticos() {
 
   return (
     <PlantillaAdmin titulo="Stock crítico">
-      <section aria-labelledby="titulo-criticos" className="admin-bloque">
+      <section className="admin-bloque">
         <h2 id="titulo-criticos" className="visually-hidden">Productos con stock crítico</h2>
 
         <p className="subtitulo-catalogo text-start">

@@ -20,22 +20,28 @@ function PlantillaAdmin({ titulo, children }) {
             <li><NavLink to="/admin/productos">Productos</NavLink></li>
             <li><NavLink to="/admin/criticos">Stock crítico</NavLink></li>
             <li><NavLink to="/admin/pedidos">Pedidos</NavLink></li>
+            <li><NavLink to="/admin/reportes">Reportes</NavLink></li>
             {usuarioActivo?.rol === "Administrador" && (
               <li><NavLink to="/admin/usuarios">Usuarios</NavLink></li>
             )}
             <li><NavLink to="/" end>Ir a la tienda</NavLink></li>
-            
           </ul>
         </nav>
 
         <footer className="admin-usuario">
           <p>{usuarioActivo?.nombre}</p>
           <p className="admin-rol">{usuarioActivo?.rol}</p>
-          <Boton
-            texto="Cerrar sesión"
-            className="btn btn-outline-light btn-sm"
-            onClick={() => { cerrarSesion(); navigate("/"); }}
-          />
+
+          <div className="d-grid gap-2">
+            <NavLink to="/admin/perfil" className="btn btn-outline-warning btn-sm">
+              Mi perfil
+            </NavLink>
+            <Boton
+              texto="Cerrar sesión"
+              className="btn btn-outline-light btn-sm"
+              onClick={() => { cerrarSesion(); navigate("/"); }}
+            />
+          </div>
         </footer>
       </aside>
 

@@ -85,7 +85,7 @@ function AdminProductos() {
         </section>
       )}
 
-      <section aria-labelledby="titulo-filtros-productos" className="admin-bloque">
+      <section className="admin-bloque">
         <h2 id="titulo-filtros-productos" className="visually-hidden">Buscar productos</h2>
 
         <form className="filtros-admin" onSubmit={(e) => e.preventDefault()}>
@@ -104,7 +104,7 @@ function AdminProductos() {
         </form>
       </section>
 
-      <section aria-labelledby="titulo-listado-productos" className="admin-bloque">
+      <section className="admin-bloque">
         <h2 id="titulo-listado-productos" className="visually-hidden">Listado de productos</h2>
 
         {productosVisibles.length > 0 ? (

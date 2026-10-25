@@ -12,15 +12,19 @@ import Checkout from './pages/checkout';
 import CompraExitosa from './pages/CompraExitosa';
 import PagoFallido from './pages/PagoFallido';
 import MisPedidos from './pages/MisPedidos';
-import AdminProductos from './pages/AdminProductos';
-import AdminPedidos from './pages/AdminPedidos';
 import AdminDashboard from './pages/AdminDashboard';
+import AdminProductos from './pages/AdminProductos';
 import AdminCriticos from './pages/AdminCriticos';
+import AdminPedidos from './pages/AdminPedidos';
 import AdminComprobante from './pages/AdminComprobante';
 import AdminUsuarios from './pages/AdminUsuarios';
+import AdminHistorial from './pages/AdminHistorial';
+import AdminReportes from './pages/AdminReportes';
+import AdminPerfil from './pages/AdminPerfil';
 import './App.css';
 
 const ROLES_ADMIN = ["Administrador", "Vendedor"];
+const SOLO_ADMIN = ["Administrador"];
 
 function App() {
   return (
@@ -42,12 +46,17 @@ function App() {
         <Route path="/mis-pedidos" element={<RutaProtegida roles={["Cliente"]}><MisPedidos /></RutaProtegida>} />
 
         {/* Rutas solo para Administrador y Vendedor */}
-        <Route path="/admin/productos" element={<RutaProtegida roles={ROLES_ADMIN}><AdminProductos /></RutaProtegida>} />
-        <Route path="/admin/pedidos" element={<RutaProtegida roles={ROLES_ADMIN}><AdminPedidos /></RutaProtegida>} />
         <Route path="/admin" element={<RutaProtegida roles={ROLES_ADMIN}><AdminDashboard /></RutaProtegida>} />
+        <Route path="/admin/productos" element={<RutaProtegida roles={ROLES_ADMIN}><AdminProductos /></RutaProtegida>} />
         <Route path="/admin/criticos" element={<RutaProtegida roles={ROLES_ADMIN}><AdminCriticos /></RutaProtegida>} />
+        <Route path="/admin/pedidos" element={<RutaProtegida roles={ROLES_ADMIN}><AdminPedidos /></RutaProtegida>} />
         <Route path="/admin/pedidos/:id" element={<RutaProtegida roles={ROLES_ADMIN}><AdminComprobante /></RutaProtegida>} />
-        <Route path="/admin/usuarios" element={<RutaProtegida roles={["Administrador"]}><AdminUsuarios /></RutaProtegida>} />
+        <Route path="/admin/reportes" element={<RutaProtegida roles={ROLES_ADMIN}><AdminReportes /></RutaProtegida>} />
+        <Route path="/admin/perfil" element={<RutaProtegida roles={ROLES_ADMIN}><AdminPerfil /></RutaProtegida>} />
+
+        {/* Rutas solo para Administrador */}
+        <Route path="/admin/usuarios" element={<RutaProtegida roles={SOLO_ADMIN}><AdminUsuarios /></RutaProtegida>} />
+        <Route path="/admin/usuarios/:id/pedidos" element={<RutaProtegida roles={SOLO_ADMIN}><AdminHistorial /></RutaProtegida>} />
       </Routes>
     </TiendaProvider>
   );

@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import PlantillaAdmin from '../components/templates/PlantillaAdmin';
 import TablaUsuarios from '../components/organisms/TablaUsuarios';
 import FormularioUsuario from '../components/organisms/FormularioUsuario';
@@ -8,6 +9,7 @@ import { useTienda } from '../context/TiendaContext';
 
 function AdminUsuarios() {
   const { usuarios, usuarioActivo, guardarUsuario } = useTienda();
+  const navigate = useNavigate();
   const [busqueda, setBusqueda] = useState("");
   const [formulario, setFormulario] = useState(null); 
   const [mensaje, setMensaje] = useState("");
@@ -57,7 +59,7 @@ function AdminUsuarios() {
         />
       )}
 
-      <section aria-labelledby="titulo-buscar-usuarios" className="admin-bloque">
+      <section className="admin-bloque">
         <h2 id="titulo-buscar-usuarios" className="visually-hidden">Buscar usuarios</h2>
         <form className="filtros-admin" onSubmit={(e) => e.preventDefault()}>
           <fieldset>
@@ -75,10 +77,14 @@ function AdminUsuarios() {
         </form>
       </section>
 
-      <section aria-labelledby="titulo-listado-usuarios" className="admin-bloque">
+      <section className="admin-bloque">
         <h2 id="titulo-listado-usuarios" className="visually-hidden">Listado de usuarios</h2>
         {usuariosVisibles.length > 0 ? (
-          <TablaUsuarios usuarios={usuariosVisibles} onEditar={abrirFormulario} />
+          <TablaUsuarios
+            usuarios={usuariosVisibles}
+            onEditar={abrirFormulario}
+            onVerPedidos={(usuario) => navigate(`/admin/usuarios/${usuario.id}/pedidos`)}
+          />
         ) : (
           <p className="aviso-no-encontrado">No hay usuarios que coincidan con la búsqueda.</p>
         )}

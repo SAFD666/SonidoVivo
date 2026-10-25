@@ -100,7 +100,7 @@ function FormularioProducto({ productoInicial, codigosExistentes = [], onGuardar
   const vistaPrevia = datos.imagen.trim() || IMAGEN_POR_CATEGORIA[datos.categoria];
 
   return (
-    <form className="formulario-producto" onSubmit={enviar} noValidate aria-labelledby="titulo-form-producto">
+    <form className="formulario-producto" onSubmit={enviar} noValidate>
       <h2 id="titulo-form-producto">
         {esEdicion ? `Editar producto ${datos.codigo}` : "Nuevo producto"}
       </h2>
