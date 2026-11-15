@@ -1,8 +1,9 @@
-function EtiquetaStock({ stock }) {
-  const tieneStock = stock > 0;
+function EtiquetaStock(props) {
+  const tieneStock = props.stock > 0;
+
   return (
     <span className={`etiqueta-stock ${tieneStock ? 'disponible' : 'agotado'}`}>
-      Stock: {stock} {stock === 1 ? 'unidad' : 'unidades'}
+      Stock: {props.stock} {props.stock === 1 ? 'unidad' : 'unidades'}
     </span>
   );
 }

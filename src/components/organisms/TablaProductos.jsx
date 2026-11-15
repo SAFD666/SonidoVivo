@@ -1,11 +1,11 @@
 import Boton from "../atoms/Boton";
 import EtiquetaStock from "../atoms/EtiquetaStock";
 
-function TablaProductos({ productos, onEditar, onEliminar }) {
+function TablaProductos(props) {
   return (
     <div className="table-responsive">
       <table className="table table-hover align-middle tabla-admin">
-        <caption>Productos del catálogo ({productos.length})</caption>
+        <caption>Productos del catálogo ({props.productos.length})</caption>
 
         <thead>
           <tr>
@@ -22,7 +22,7 @@ function TablaProductos({ productos, onEditar, onEliminar }) {
         </thead>
 
         <tbody>
-          {productos.map((p) => (
+          {props.productos.map((p) => (
             <tr key={p.codigo}>
               <th scope="row">{p.codigo}</th>
               <td>
@@ -40,11 +40,11 @@ function TablaProductos({ productos, onEditar, onEliminar }) {
               <td>{p.esOferta ? "Sí" : "No"}</td>
               <td>
                 <div className="acciones-tabla">
-                  {onEditar && (
-                    <Boton texto="Editar" className="btn btn-sm btn-outline-warning" onClick={() => onEditar(p)} />
+                  {props.onEditar && (
+                    <Boton texto="Editar" className="btn btn-sm btn-outline-warning" onClick={() => props.onEditar(p)} />
                   )}
-                    {onEliminar && (
-                    <Boton texto="Eliminar" className="btn btn-sm btn-outline-danger" onClick={() => onEliminar(p)} />
+                  {props.onEliminar && (
+                    <Boton texto="Eliminar" className="btn btn-sm btn-outline-danger" onClick={() => props.onEliminar(p)} />
                   )}
                 </div>
               </td>

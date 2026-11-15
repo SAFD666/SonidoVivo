@@ -6,8 +6,7 @@ import { categoriasIniciales } from '../data/categorias';
 
 const TiendaContext = createContext();
 
-export function TiendaProvider({ children }) {
-  
+export function TiendaProvider(props) {
   // Estado de Productos (los datos los entrega el servicio)
   const [listaProductos, setListaProductos] = useState(() => productosService.listarProductos());
     // Estado de Categorías (con persistencia en localStorage)
@@ -280,7 +279,7 @@ export function TiendaProvider({ children }) {
         guardarCategoria
       }}
     >
-      {children}
+      {props.children}
     </TiendaContext.Provider>
   );
 }

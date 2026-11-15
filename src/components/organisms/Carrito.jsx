@@ -1,9 +1,9 @@
 import ItemCarrito from "../molecules/ItemCarrito";
 
-function Carrito({ items, onCambiarCantidad, onEliminar }) {
+function Carrito(props) {
   return (
     <section className="lista-carrito">
-      {items.map((item) => (
+      {props.items.map((item) => (
         <ItemCarrito
           key={item.codigo}
           codigo={item.codigo}
@@ -12,8 +12,8 @@ function Carrito({ items, onCambiarCantidad, onEliminar }) {
           precio={item.precio}
           cantidad={item.cantidad}
           stock={item.stock}
-          onCambiarCantidad={(nuevaCantidad) => onCambiarCantidad(item.codigo, nuevaCantidad)}
-          onEliminar={() => onEliminar(item.codigo)}
+          onCambiarCantidad={(nuevaCantidad) => props.onCambiarCantidad(item.codigo, nuevaCantidad)}
+          onEliminar={() => props.onEliminar(item.codigo)}
         />
       ))}
     </section>

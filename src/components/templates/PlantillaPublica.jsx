@@ -1,14 +1,12 @@
-
 import Navbar from '../organisms/Navbar';
 import Footer from '../organisms/Footer';
 
-
-function PlantillaPublica({ children }) {
+function PlantillaPublica(props) {
   return (
-    <div >
+    <div>
       <Navbar />
-      <main >
-        {children}
+      <main>
+        {props.children}
       </main>
       <Footer />
     </div>

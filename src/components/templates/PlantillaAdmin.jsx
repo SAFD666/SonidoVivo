@@ -2,7 +2,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import Boton from '../atoms/Boton';
 import { useTienda } from '../../context/TiendaContext';
 
-function PlantillaAdmin({ titulo, children }) {
+function PlantillaAdmin(props) {
   const navigate = useNavigate();
   const { usuarioActivo, cerrarSesion } = useTienda();
 
@@ -48,9 +48,9 @@ function PlantillaAdmin({ titulo, children }) {
 
       <main className="admin-contenido">
         <header className="admin-cabecera">
-          <h1 className="titulo-seccion">{titulo}</h1>
+            <h1 className="titulo-seccion">{props.titulo}</h1>
         </header>
-        {children}
+          {props.children}
       </main>
     </div>
   );

@@ -1,16 +1,16 @@
-function CampoTexto({ id, name, type = "text", placeholder, value, onChange, required = false, min, step }) {
+function CampoTexto(props) {
   return (
     <input
-      id={id}
-      name={name}
-      type={type}
+      id={props.id}
+      name={props.name}
+      type={props.type || "text"}
       className="form-control"
-      placeholder={placeholder}
-      value={value}
-      onChange={onChange}
-      required={required}
-      min={min}
-      step={step}
+      placeholder={props.placeholder}
+      value={props.value}
+      onChange={props.onChange}
+      required={props.required}
+      min={props.min}
+      step={props.step}
     />
   );
 }

@@ -1,9 +1,9 @@
-function Indicador({ titulo, valor, detalle, alerta = false }) {
+function Indicador(props) {
   return (
-    <article className={alerta ? "indicador alerta" : "indicador"}>
-      <h3>{titulo}</h3>
-      <p><strong>{valor}</strong></p>
-      {detalle && <p>{detalle}</p>}
+    <article className={props.alerta ? "indicador alerta" : "indicador"}>
+      <h3>{props.titulo}</h3>
+      <p><strong>{props.valor}</strong></p>
+      {props.detalle && <p>{props.detalle}</p>}
     </article>
   );
 }

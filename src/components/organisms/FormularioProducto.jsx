@@ -16,7 +16,8 @@ const PRODUCTO_VACIO = {
   esOferta: false,
 };
 
-function FormularioProducto({ productoInicial, categorias = [], codigosExistentes = [], onGuardar, onCancelar }) {
+function FormularioProducto(props) {
+  const { productoInicial, categorias = [], codigosExistentes = [], onGuardar, onCancelar } = props;
   const esEdicion = Boolean(productoInicial);
   const [datos, setDatos] = useState(
     productoInicial

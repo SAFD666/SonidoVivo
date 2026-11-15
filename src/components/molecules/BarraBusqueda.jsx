@@ -2,12 +2,13 @@ import { useState } from "react";
 import CampoTexto from "../atoms/CampoTexto";
 import Boton from "../atoms/Boton";
 
-function BarraBusqueda({ valorInicial = "", onBuscar }) {
-  const [texto, setTexto] = useState(valorInicial);
+function BarraBusqueda(props) {
+  //  el texto que la persona va escribiendo
+  const [texto, setTexto] = useState(props.valorInicial || "");
 
   const enviar = (e) => {
     e.preventDefault();
-    onBuscar(texto.trim());
+    props.onBuscar(texto.trim()); // avisa al padre qué se buscó
   };
 
   return (

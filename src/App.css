@@ -1591,6 +1591,33 @@ footer.footer-sonido-vivo a {
   color: #f2ede4;
   border-color: var(--borde-oro);
 }
+/* === Botón de favoritos === */
+.tarjeta-pie {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.boton-favorito {
+  border: 1px solid var(--borde-oro);
+  background: transparent;
+  color: var(--oro-claro);
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.boton-favorito:hover {
+  background: rgba(212, 169, 90, 0.12);
+}
+
+.boton-favorito.activo {
+  background: rgba(212, 169, 90, 0.2);
+  border-color: var(--oro);
+  color: var(--oro);
+}
 
 @media (max-width: 700px) {
   .formulario-grilla,

@@ -2,11 +2,11 @@ import { Link } from "react-router-dom";
 import EstadoPedido, { ESTADOS_PEDIDO } from "../molecules/EstadoPedido";
 import Selector from "../atoms/Selector";
 
-function TablaPedidos({ pedidos, onCambiarEstado }) {
+function TablaPedidos(props) {
   return (
     <div className="table-responsive">
       <table className="table table-hover align-middle tabla-admin">
-        <caption>Pedidos registrados en la tienda ({pedidos.length})</caption>
+        <caption>Pedidos registrados en la tienda ({props.pedidos.length})</caption>
 
         <thead>
           <tr>
@@ -22,7 +22,7 @@ function TablaPedidos({ pedidos, onCambiarEstado }) {
         </thead>
 
         <tbody>
-          {pedidos.map((pedido) => (
+          {props.pedidos.map((pedido) => (
             <tr key={pedido.id}>
               <th scope="row">
                 <Link to={`/admin/pedidos/${pedido.id}`} className="enlace-texto">{pedido.id}</Link>
@@ -58,7 +58,7 @@ function TablaPedidos({ pedidos, onCambiarEstado }) {
                   name="estado"
                   value={pedido.estado}
                   opciones={ESTADOS_PEDIDO}
-                  onChange={(e) => onCambiarEstado(pedido.id, e.target.value)}
+                  onChange={(e) => props.onCambiarEstado(pedido.id, e.target.value)}
                 />
               </td>
             </tr>

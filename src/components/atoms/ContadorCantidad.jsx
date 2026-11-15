@@ -1,17 +1,21 @@
-
 import { useState } from 'react';
 
-function ContadorCantidad({ cantidad: cantidadProp, maximo = 99, onChange }) {
+function ContadorCantidad(props) {
+  // este prop viene del padre y no se modifican
+  const maximo = props.maximo ?? 99;
+
+  // estado: dato propio que cambia con los clics
   const [cantidadInterna, setCantidadInterna] = useState(1);
 
-  const esControlado = cantidadProp !== undefined;
-  const cantidadActual = esControlado ? cantidadProp : cantidadInterna;
+  // Si el padre enviara "cantidad", el contador es controlado por el padre
+  const esControlado = props.cantidad !== undefined;
+  const cantidadActual = esControlado ? props.cantidad : cantidadInterna;
 
   const actualizar = (nuevoValor) => {
-    if (esControlado && onChange) {
-      onChange(nuevoValor);
+    if (esControlado && props.onChange) {
+      props.onChange(nuevoValor);   // avisa al padre
     } else {
-      setCantidadInterna(nuevoValor);
+      setCantidadInterna(nuevoValor); // cambia su propio estado
     }
   };
 

@@ -1,14 +1,14 @@
 import Precio from "../atoms/Precio";
 
-function ResumenCompra({ items, total }) {
-  const cantidadItems = items.reduce((acc, item) => acc + item.cantidad, 0);
+function ResumenCompra(props) {
+  const cantidadItems = props.items.reduce((acc, item) => acc + item.cantidad, 0);
 
   return (
     <aside className="resumen-compra">
       <h3>Resumen de compra</h3>
 
       <ul className="resumen-lista">
-        {items.map((item) => (
+        {props.items.map((item) => (
           <li key={item.codigo}>
             <span>{item.cantidad} x {item.nombre}</span>
             <span>${(item.precio * item.cantidad).toLocaleString('es-CL')}</span>
@@ -28,7 +28,7 @@ function ResumenCompra({ items, total }) {
 
       <div className="resumen-fila resumen-total">
         <span>Total</span>
-        <Precio precio={total} />
+        <Precio precio={props.total} />
       </div>
     </aside>
   );

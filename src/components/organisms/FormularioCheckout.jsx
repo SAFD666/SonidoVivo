@@ -12,7 +12,8 @@ function separarNombre(nombreCompleto = "") {
   return { nombre, apellidos: apellidos.join(" ") };
 }
 
-function FormularioCheckout({ usuario, onConfirmar }) {
+function FormularioCheckout(props) {
+  const { usuario, onConfirmar } = props;
   const { nombre, apellidos } = separarNombre(usuario?.nombre);
 
   const [datos, setDatos] = useState({

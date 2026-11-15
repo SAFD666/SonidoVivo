@@ -1,9 +1,9 @@
 import TarjetaProducto from "../molecules/TarjetaProducto";
 
-function CatalogoProductos({ productos, onVer }) {
+function CatalogoProductos(props) {
   return (
     <div className="grilla-catalogo">
-      {productos.map((producto) => (
+      {props.productos.map((producto) => (
         <TarjetaProducto
           key={producto.codigo}
           codigo={producto.codigo}
@@ -13,7 +13,8 @@ function CatalogoProductos({ productos, onVer }) {
           precio={producto.precio}
           stock={producto.stock}
           imagen={producto.imagen}
-          onVer={() => onVer(producto)}
+          esOferta={producto.esOferta}
+          onVer={() => props.onVer(producto)}
         />
       ))}
     </div>

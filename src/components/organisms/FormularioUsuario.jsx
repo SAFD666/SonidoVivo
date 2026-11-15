@@ -13,7 +13,8 @@ const USUARIO_VACIO = {
   activo: true,
 };
 
-function FormularioUsuario({ usuarioInicial, esUsuarioActual = false, onGuardar, onCancelar }) {
+function FormularioUsuario(props) {
+  const { usuarioInicial, esUsuarioActual = false, onGuardar, onCancelar } = props;
   const esEdicion = Boolean(usuarioInicial);
   const [datos, setDatos] = useState(
     usuarioInicial ? { ...usuarioInicial, password: "" } : USUARIO_VACIO
