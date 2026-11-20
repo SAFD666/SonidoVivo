@@ -10,14 +10,13 @@ const FORMULARIO_VACIO = { nombre: "", correo: "", password: "", confirmar: "" }
 function Login() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { iniciarSesion, registrarUsuario } = useTienda();
+  const { iniciarSesion, registrarUsuario, sesionVencida } = useTienda();
 
   const [modoRegistro, setModoRegistro] = useState(false);
   const [datos, setDatos] = useState(FORMULARIO_VACIO);
   const [errores, setErrores] = useState({});
   const [mensajeError, setMensajeError] = useState("");
-
-  const destino = location.state?.desde || "/";
+  const [enviando, setEnviando] = useState(false);
 
   const cambiar = (e) => {
     setDatos({ ...datos, [e.target.name]: e.target.value });
@@ -40,14 +39,17 @@ function Login() {
     return Object.keys(nuevosErrores).length === 0;
   };
 
-  const enviar = (e) => {
+  // async: espera la respuesta de la API antes de decidir a dónde ir
+  const enviar = async (e) => {
     e.preventDefault();
     setMensajeError("");
     if (!validar()) return;
 
+    setEnviando(true);
     const resultado = modoRegistro
-      ? registrarUsuario(datos.nombre.trim(), datos.correo.trim(), datos.password)
-      : iniciarSesion(datos.correo.trim(), datos.password);
+      ? await registrarUsuario(datos.nombre.trim(), datos.correo.trim(), datos.password)
+      : await iniciarSesion(datos.correo.trim(), datos.password);
+    setEnviando(false);
 
     if (resultado.exito) {
       const destinoPorRol = resultado.usuario.rol === "Cliente" ? "/" : "/admin";
@@ -62,7 +64,11 @@ function Login() {
       <div className="Titulo">
         <h2>{modoRegistro ? "Crear Cuenta" : "Iniciar Sesión"}</h2>
 
-        {location.state?.desde && (
+        {sesionVencida && (
+          <p className="aviso-login">Tu sesión venció. Inicia sesión de nuevo.</p>
+        )}
+
+        {!sesionVencida && location.state?.desde && (
           <p className="aviso-login">Debes iniciar sesión para continuar.</p>
         )}
 
@@ -84,8 +90,9 @@ function Login() {
           )}
 
           <Boton
-            texto={modoRegistro ? "Registrarme" : "Ingresar"}
+            texto={enviando ? "Ingresando..." : (modoRegistro ? "Registrarme" : "Ingresar")}
             type="submit"
+            deshabilitado={enviando}
             className="btn-sonido-vivo btn-ancho-total"
           />
         </form>
