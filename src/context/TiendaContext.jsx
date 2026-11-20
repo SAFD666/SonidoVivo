@@ -1,37 +1,51 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import { pedidosIniciales } from '../data/pedidos';
 import { usuariosIniciales } from '../data/usuarios';
-import * as productosService from '../services/ProductosService';
-import { categoriasIniciales } from '../data/categorias';
+import { listarProductos, listarCategorias } from '../services/catalogoService';
+import { obtenerMensajeError } from '../services/api';
 
 const TiendaContext = createContext();
 
 export function TiendaProvider(props) {
-  // Estado de Productos (los datos los entrega el servicio)
-  const [listaProductos, setListaProductos] = useState(() => productosService.listarProductos());
-    // Estado de Categorías (con persistencia en localStorage)
-    const [categorias, setCategorias] = useState(() => {
-    const guardadas = localStorage.getItem('sv_categorias');
-    return guardadas ? JSON.parse(guardadas) : categoriasIniciales;
-  });
+  // 1. Catálogo: ahora viene de la API (backend Spring Boot + PostgreSQL)
+  const [listaProductos, setListaProductos] = useState([]);
+  const [categorias, setCategorias] = useState([]);
+  const [cargandoCatalogo, setCargandoCatalogo] = useState(true);
+  const [errorCatalogo, setErrorCatalogo] = useState('');
 
+  const cargarCatalogo = async () => {
+    setCargandoCatalogo(true);
+    setErrorCatalogo('');
+    try {
+      // Las dos peticiones salen al mismo tiempo
+      const [productos, cats] = await Promise.all([listarProductos(), listarCategorias()]);
+      setListaProductos(productos);
+      setCategorias(cats);
+    } catch (error) {
+      setErrorCatalogo(obtenerMensajeError(error));
+    } finally {
+      setCargandoCatalogo(false);
+    }
+  };
+
+  // Se pide el catálogo una vez, cuando la aplicación aparece en pantalla
   useEffect(() => {
-    localStorage.setItem('sv_categorias', JSON.stringify(categorias));
-  }, [categorias]);
+    cargarCatalogo();
+  }, []);
 
-  // 2. Estado del Carrito
+  // 2. Estado del Carrito (sigue en el navegador)
   const [carrito, setCarrito] = useState(() => {
     const guardado = localStorage.getItem('sv_carrito');
     return guardado ? JSON.parse(guardado) : [];
   });
 
-  // 3. Estado de Pedidos
+  // 3. Estado de Pedidos (etapa F3: pasará a la API)
   const [pedidos, setPedidos] = useState(() => {
     const guardados = localStorage.getItem('sv_pedidos');
     return guardados ? JSON.parse(guardados) : pedidosIniciales;
   });
 
-  // 4. Estado de Usuarios y Usuario Activo
+  // 4. Usuarios y Usuario Activo (etapa F2: pasará a la API)
   const [usuarios, setUsuarios] = useState(() => {
     const guardados = localStorage.getItem('sv_usuarios');
     return guardados ? JSON.parse(guardados) : usuariosIniciales;
@@ -42,11 +56,7 @@ export function TiendaProvider(props) {
     return guardado ? JSON.parse(guardado) : null;
   });
 
-  // Sincronización con localStorage
-  useEffect(() => {
-    localStorage.setItem('sv_productos', JSON.stringify(listaProductos));
-  }, [listaProductos]);
-
+  // Sincronización con localStorage (solo lo que todavía no está en la API)
   useEffect(() => {
     localStorage.setItem('sv_carrito', JSON.stringify(carrito));
   }, [carrito]);
@@ -67,7 +77,7 @@ export function TiendaProvider(props) {
     }
   }, [usuarioActivo]);
 
-  // --- FUNCIONES DE AUTENTICACIÓN ---
+  // --- FUNCIONES DE AUTENTICACIÓN (etapa F2) ---
   const iniciarSesion = (correo, password) => {
     const user = usuarios.find(
       (u) => u.correo.toLowerCase() === correo.toLowerCase() && u.password === password && u.activo
@@ -84,24 +94,18 @@ export function TiendaProvider(props) {
     if (existe) {
       return { exito: false, mensaje: "Este correo ya está registrado." };
     }
-    const nuevoUsuario = {
-      id: Date.now(),
-      nombre,
-      correo,
-      password,
-      rol: "Cliente",
-      activo: true
-    };
+    const nuevoUsuario = { id: Date.now(), nombre, correo, password, rol: "Cliente", activo: true };
     setUsuarios([...usuarios, nuevoUsuario]);
     setUsuarioActivo(nuevoUsuario);
     return { exito: true, usuario: nuevoUsuario };
   };
 
-    const cerrarSesion = () => {
+  const cerrarSesion = () => {
     setUsuarioActivo(null);
     setCarrito([]);
   };
-    // administracion de usuarios
+
+  // Administración de usuarios (etapa F4)
   const guardarUsuario = (datos) => {
     const correoRepetido = usuarios.some(
       (u) => u.correo.toLowerCase() === datos.correo.toLowerCase() && u.id !== datos.id
@@ -109,11 +113,8 @@ export function TiendaProvider(props) {
     if (correoRepetido) {
       return { exito: false, mensaje: "Ya existe un usuario con ese correo." };
     }
-
-    // Si la contraseña viene vacía (al editar), se conserva la actual
     const { password, ...resto } = datos;
     const cambios = password ? datos : resto;
-
     if (datos.id) {
       setUsuarios((prev) => prev.map((u) => (u.id === datos.id ? { ...u, ...cambios } : u)));
       if (usuarioActivo?.id === datos.id) {
@@ -157,17 +158,10 @@ export function TiendaProvider(props) {
     setCarrito([]);
   };
 
-  const totalCarrito = carrito.reduce(
-    (acc, item) => acc + item.precio * item.cantidad,
-    0
-  );
+  const totalCarrito = carrito.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
+  const cantidadTotalItems = carrito.reduce((acc, item) => acc + item.cantidad, 0);
 
-  const cantidadTotalItems = carrito.reduce(
-    (acc, item) => acc + item.cantidad,
-    0
-  );
-
-  // --- FUNCIONES DE PEDIDOS Y DESCUENTO AUTOMÁTICO DE STOCK ---
+  // --- PEDIDOS (etapa F3: el backend calculará el total y descontará el stock) ---
   const crearPedido = (datosEntrega) => {
     const nuevoPedido = {
       id: `PED-${Math.floor(1000 + Math.random() * 9000)}`,
@@ -179,55 +173,36 @@ export function TiendaProvider(props) {
       tipoEntrega: datosEntrega.tipoEntrega,
       estado: "En preparación",
       total: totalCarrito,
-      items: carrito.map((i) => ({
-        codigo: i.codigo,
-        nombre: i.nombre,
-        precio: i.precio,
-        cantidad: i.cantidad
-      }))
+      items: carrito.map((i) => ({ codigo: i.codigo, nombre: i.nombre, precio: i.precio, cantidad: i.cantidad }))
     };
-
-    // Descontar stock automáticamente de listaProductos
-    setListaProductos((prevProductos) =>
-      prevProductos.map((prod) => {
+    setListaProductos((prev) =>
+      prev.map((prod) => {
         const itemComprado = carrito.find((c) => c.codigo === prod.codigo);
-        if (itemComprado) {
-          return {
-            ...prod,
-            stock: Math.max(0, prod.stock - itemComprado.cantidad)
-          };
-        }
-        return prod;
+        return itemComprado ? { ...prod, stock: Math.max(0, prod.stock - itemComprado.cantidad) } : prod;
       })
     );
-
     setPedidos((prev) => [nuevoPedido, ...prev]);
     vaciarCarrito();
     return nuevoPedido;
   };
 
   const cambiarEstadoPedido = (idPedido, nuevoEstado) => {
-    setPedidos((prev) =>
-      prev.map((p) => (p.id === idPedido ? { ...p, estado: nuevoEstado } : p))
+    setPedidos((prev) => prev.map((p) => (p.id === idPedido ? { ...p, estado: nuevoEstado } : p)));
+  };
+
+  // --- ADMIN: productos y categorías (etapa F4: pasarán a la API; por ahora solo cambian en pantalla) ---
+  const guardarProducto = (producto) => {
+    setListaProductos((prev) =>
+      prev.some((p) => p.codigo === producto.codigo)
+        ? prev.map((p) => (p.codigo === producto.codigo ? { ...p, ...producto } : p))
+        : [{ ...producto, id: producto.codigo }, ...prev]
     );
   };
 
-  
-  //  FUNCIONES ADMIN CRUD PRODUCTOS (usando ahora el servicio) 
-  const guardarProducto = (producto) => {
-    const existe = listaProductos.some((p) => p.codigo === producto.codigo);
-    const nuevaLista = existe
-      ? productosService.actualizarProducto(producto.codigo, producto)
-      : productosService.crearProducto(producto);
-    setListaProductos(nuevaLista);
-  };
-
   const eliminarProducto = (codigo) => {
-    setListaProductos(productosService.eliminarProducto(codigo));
+    setListaProductos((prev) => prev.filter((p) => p.codigo !== codigo));
   };
 
-  
-  // funcion para categoria
   const guardarCategoria = (nombreOriginal, datos) => {
     const nombre = datos.nombre.trim();
     const repetida = categorias.some(
@@ -236,12 +211,9 @@ export function TiendaProvider(props) {
     if (repetida) {
       return { exito: false, mensaje: "Ya existe una categoría con ese nombre." };
     }
-
     const categoria = { nombre, imagen: datos.imagen.trim() || "/img/logotipo.jpg" };
-
     if (nombreOriginal) {
-      setCategorias((prev) => prev.map((c) => (c.nombre === nombreOriginal ? categoria : c)));
-      // Si se renombró, los productos de esa categoría se actualizan
+      setCategorias((prev) => prev.map((c) => (c.nombre === nombreOriginal ? { ...c, ...categoria } : c)));
       if (nombreOriginal !== nombre) {
         setListaProductos((prev) =>
           prev.map((p) => (p.categoria === nombreOriginal ? { ...p, categoria: nombre } : p))
@@ -264,6 +236,9 @@ export function TiendaProvider(props) {
         usuarioActivo,
         totalCarrito,
         cantidadTotalItems,
+        cargandoCatalogo,
+        errorCatalogo,
+        recargarCatalogo: cargarCatalogo,
         iniciarSesion,
         registrarUsuario,
         cerrarSesion,
