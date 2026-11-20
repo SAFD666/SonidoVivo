@@ -2,12 +2,13 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import { pedidosIniciales } from '../data/pedidos';
 import { usuariosIniciales } from '../data/usuarios';
 import { listarProductos, listarCategorias } from '../services/catalogoService';
-import { obtenerMensajeError } from '../services/api';
+import * as authService from '../services/authService';
+import { obtenerMensajeError, guardarToken, registrarAlVencerSesion } from '../services/api';
 
 const TiendaContext = createContext();
 
 export function TiendaProvider(props) {
-  // 1. Catálogo: ahora viene de la API (backend Spring Boot + PostgreSQL)
+  // 1. Catálogo: viene de la API (backend Spring Boot + PostgreSQL)
   const [listaProductos, setListaProductos] = useState([]);
   const [categorias, setCategorias] = useState([]);
   const [cargandoCatalogo, setCargandoCatalogo] = useState(true);
@@ -17,7 +18,6 @@ export function TiendaProvider(props) {
     setCargandoCatalogo(true);
     setErrorCatalogo('');
     try {
-      // Las dos peticiones salen al mismo tiempo
       const [productos, cats] = await Promise.all([listarProductos(), listarCategorias()]);
       setListaProductos(productos);
       setCategorias(cats);
@@ -28,35 +28,41 @@ export function TiendaProvider(props) {
     }
   };
 
-  // Se pide el catálogo una vez, cuando la aplicación aparece en pantalla
   useEffect(() => {
     cargarCatalogo();
   }, []);
 
-  // 2. Estado del Carrito (sigue en el navegador)
+  // 2. Sesión: el usuario y su token viven SOLO en memoria (Guía 19). Al recargar se vuelve a iniciar sesión.
+  const [usuarioActivo, setUsuarioActivo] = useState(null);
+  const [sesionVencida, setSesionVencida] = useState(false);
+
+  // Si la API responde 401 con un token (vencido o inválido), se cierra la sesión y se avisa
+  useEffect(() => {
+    registrarAlVencerSesion(() => {
+      guardarToken(null);
+      setUsuarioActivo(null);
+      setSesionVencida(true);
+    });
+  }, []);
+
+  // 3. Carrito (sigue en el navegador)
   const [carrito, setCarrito] = useState(() => {
     const guardado = localStorage.getItem('sv_carrito');
     return guardado ? JSON.parse(guardado) : [];
   });
 
-  // 3. Estado de Pedidos (etapa F3: pasará a la API)
+  // 4. Pedidos (etapa F3: pasarán a la API)
   const [pedidos, setPedidos] = useState(() => {
     const guardados = localStorage.getItem('sv_pedidos');
     return guardados ? JSON.parse(guardados) : pedidosIniciales;
   });
 
-  // 4. Usuarios y Usuario Activo (etapa F2: pasará a la API)
+  // 5. Lista de usuarios del panel admin (etapa F4: pasará a la API)
   const [usuarios, setUsuarios] = useState(() => {
     const guardados = localStorage.getItem('sv_usuarios');
     return guardados ? JSON.parse(guardados) : usuariosIniciales;
   });
 
-  const [usuarioActivo, setUsuarioActivo] = useState(() => {
-    const guardado = localStorage.getItem('sv_usuario_activo');
-    return guardado ? JSON.parse(guardado) : null;
-  });
-
-  // Sincronización con localStorage (solo lo que todavía no está en la API)
   useEffect(() => {
     localStorage.setItem('sv_carrito', JSON.stringify(carrito));
   }, [carrito]);
@@ -69,38 +75,31 @@ export function TiendaProvider(props) {
     localStorage.setItem('sv_usuarios', JSON.stringify(usuarios));
   }, [usuarios]);
 
-  useEffect(() => {
-    if (usuarioActivo) {
-      localStorage.setItem('sv_usuario_activo', JSON.stringify(usuarioActivo));
-    } else {
-      localStorage.removeItem('sv_usuario_activo');
+  // --- AUTENTICACIÓN CON LA API ---
+  const iniciarSesion = async (correo, password) => {
+    try {
+      const respuesta = await authService.iniciarSesion(correo, password);
+      guardarToken(respuesta.accessToken);
+      setUsuarioActivo(respuesta.usuario);
+      setSesionVencida(false);
+      return { exito: true, usuario: respuesta.usuario };
+    } catch (error) {
+      return { exito: false, mensaje: obtenerMensajeError(error) };
     }
-  }, [usuarioActivo]);
-
-  // --- FUNCIONES DE AUTENTICACIÓN (etapa F2) ---
-  const iniciarSesion = (correo, password) => {
-    const user = usuarios.find(
-      (u) => u.correo.toLowerCase() === correo.toLowerCase() && u.password === password && u.activo
-    );
-    if (user) {
-      setUsuarioActivo(user);
-      return { exito: true, usuario: user };
-    }
-    return { exito: false, mensaje: "Correo o contraseña incorrectos." };
   };
 
-  const registrarUsuario = (nombre, correo, password) => {
-    const existe = usuarios.some((u) => u.correo.toLowerCase() === correo.toLowerCase());
-    if (existe) {
-      return { exito: false, mensaje: "Este correo ya está registrado." };
+  // Registra (siempre como Cliente) y luego inicia sesión con los mismos datos
+  const registrarUsuario = async (nombre, correo, password) => {
+    try {
+      await authService.registrar(nombre, correo, password);
+      return await iniciarSesion(correo, password);
+    } catch (error) {
+      return { exito: false, mensaje: obtenerMensajeError(error) };
     }
-    const nuevoUsuario = { id: Date.now(), nombre, correo, password, rol: "Cliente", activo: true };
-    setUsuarios([...usuarios, nuevoUsuario]);
-    setUsuarioActivo(nuevoUsuario);
-    return { exito: true, usuario: nuevoUsuario };
   };
 
   const cerrarSesion = () => {
+    guardarToken(null);
     setUsuarioActivo(null);
     setCarrito([]);
   };
@@ -161,7 +160,7 @@ export function TiendaProvider(props) {
   const totalCarrito = carrito.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
   const cantidadTotalItems = carrito.reduce((acc, item) => acc + item.cantidad, 0);
 
-  // --- PEDIDOS (etapa F3: el backend calculará el total y descontará el stock) ---
+  // --- PEDIDOS (etapa F3) ---
   const crearPedido = (datosEntrega) => {
     const nuevoPedido = {
       id: `PED-${Math.floor(1000 + Math.random() * 9000)}`,
@@ -190,7 +189,7 @@ export function TiendaProvider(props) {
     setPedidos((prev) => prev.map((p) => (p.id === idPedido ? { ...p, estado: nuevoEstado } : p)));
   };
 
-  // --- ADMIN: productos y categorías (etapa F4: pasarán a la API; por ahora solo cambian en pantalla) ---
+  // --- ADMIN: productos y categorías (etapa F4) ---
   const guardarProducto = (producto) => {
     setListaProductos((prev) =>
       prev.some((p) => p.codigo === producto.codigo)
@@ -234,6 +233,7 @@ export function TiendaProvider(props) {
         usuarios,
         categorias,
         usuarioActivo,
+        sesionVencida,
         totalCarrito,
         cantidadTotalItems,
         cargandoCatalogo,

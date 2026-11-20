@@ -7,6 +7,38 @@ export const api = axios.create({
   timeout: 10000,
 })
 
+// Token JWT guardado SOLO en memoria (Guía 19): al recargar la página se pide iniciar sesión otra vez.
+let token = null
+let alVencerSesion = null
+
+export function guardarToken(nuevoToken) {
+  token = nuevoToken
+}
+
+// El contexto registra aquí qué hacer cuando la API responde 401 con un token (sesión vencida o inválida).
+export function registrarAlVencerSesion(funcion) {
+  alVencerSesion = funcion
+}
+
+// Antes de cada petición: si hay sesión, se agrega el encabezado Authorization: Bearer <token>
+api.interceptors.request.use((config) => {
+  if (token) {
+    config.headers.Authorization = 'Bearer ' + token
+  }
+  return config
+})
+
+// Después de cada respuesta: un 401 con token significa que la sesión ya no es válida
+api.interceptors.response.use(
+  (respuesta) => respuesta,
+  (error) => {
+    if (error.response?.status === 401 && token && alVencerSesion) {
+      alVencerSesion()
+    }
+    return Promise.reject(error)
+  }
+)
+
 // Convierte cualquier error de Axios en un mensaje para mostrar en pantalla (los 3 casos de la Guía 20).
 export function obtenerMensajeError(error) {
   if (error.response) {
