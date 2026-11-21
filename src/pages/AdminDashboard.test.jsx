@@ -9,10 +9,10 @@ import { STOCK_CRITICO } from '../utils/precios'
 import { renderConProveedores, admin } from '../test/renderConProveedores'
 
 describe('Página AdminDashboard', () => {
-  it('muestra los 4 indicadores calculados con los datos', () => {
+  it('muestra los 4 indicadores calculados con los datos de la API', async () => {
     const criticos = productos.filter((p) => p.stock <= STOCK_CRITICO).length
     const validos = pedidosIniciales.filter((p) => p.estado !== 'Cancelado').length
-    renderConProveedores(<AdminDashboard />, { ruta: '/admin', usuario: admin })
+    await renderConProveedores(<AdminDashboard />, { ruta: '/admin', usuario: admin })
 
     expect(screen.getByRole('heading', { level: 1, name: 'Panel de control' })).toBeInTheDocument()
     expect(screen.getAllByRole('article')).toHaveLength(4)
@@ -20,14 +20,14 @@ describe('Página AdminDashboard', () => {
     expect(screen.getByText(`${validos} pedidos válidos`)).toBeInTheDocument()
   })
 
-  it('cada pedido enlaza a su comprobante', () => {
-    renderConProveedores(<AdminDashboard />, { ruta: '/admin', usuario: admin })
+  it('cada pedido enlaza a su comprobante', async () => {
+    await renderConProveedores(<AdminDashboard />, { ruta: '/admin', usuario: admin })
 
     expect(screen.getByRole('link', { name: 'PED-1001' })).toHaveAttribute('href', '/admin/pedidos/PED-1001')
   })
 
   it('el acceso rápido lleva a stock crítico', async () => {
-    renderConProveedores(
+    await renderConProveedores(
       <Routes>
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/admin/criticos" element={<p>Página de stock crítico</p>} />

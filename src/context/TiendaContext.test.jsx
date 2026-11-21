@@ -1,53 +1,77 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { renderHook, act } from '@testing-library/react'
 import { TiendaProvider, useTienda } from './TiendaContext'
+import { esperarCargas } from '../test/renderConProveedores'
+import { guardarToken } from '../services/api'
 
-const usarTienda = () => renderHook(() => useTienda(), { wrapper: TiendaProvider })
+// Usa el contexto real con la API falsa y espera a que cargue el catálogo
+async function usarTienda() {
+  const hook = renderHook(() => useTienda(), { wrapper: TiendaProvider })
+  await esperarCargas()
+  return hook
+}
 
-// Busca un producto actual del catálogo por su código
 const buscar = (result, codigo) => result.current.productos.find((p) => p.codigo === codigo)
 
+async function entrar(result, correo, password) {
+  let respuesta
+  await act(async () => { respuesta = await result.current.iniciarSesion(correo, password) })
+  await esperarCargas() // pedidos y usuarios del rol
+  return respuesta
+}
+
 describe('TiendaContext', () => {
-  // Cada caso parte con el navegador limpio: datos iniciales, sin sesión ni carrito
-  beforeEach(() => {
-    localStorage.clear()
+  // ---------- Catálogo ----------
+  it('carga el catálogo desde la API al iniciar', async () => {
+    const { result } = await usarTienda()
+
+    expect(result.current.cargandoCatalogo).toBe(false)
+    expect(result.current.productos.length).toBeGreaterThan(0)
+    expect(result.current.categorias.length).toBeGreaterThan(0)
   })
 
   // ---------- Sesión ----------
-  it('inicia sesión con un correo y contraseña correctos', () => {
-    const { result } = usarTienda()
+  it('inicia sesión con un correo y contraseña correctos', async () => {
+    const { result } = await usarTienda()
 
-    let respuesta
-    act(() => { respuesta = result.current.iniciarSesion('cliente@correo.cl', 'cliente123') })
+    const respuesta = await entrar(result, 'cliente@correo.cl', 'cliente123')
 
     expect(respuesta.exito).toBe(true)
     expect(result.current.usuarioActivo.nombre).toBe('Cliente Prueba')
+    expect(sessionStorage.getItem('sv_token')).toBe('token-3')
   })
 
-  it('rechaza una contraseña incorrecta', () => {
-    const { result } = usarTienda()
+  it('rechaza una contraseña incorrecta', async () => {
+    const { result } = await usarTienda()
 
-    let respuesta
-    act(() => { respuesta = result.current.iniciarSesion('cliente@correo.cl', 'equivocada') })
+    const respuesta = await entrar(result, 'cliente@correo.cl', 'equivocada')
 
     expect(respuesta.exito).toBe(false)
     expect(respuesta.mensaje).toBe('Correo o contraseña incorrectos.')
     expect(result.current.usuarioActivo).toBeNull()
   })
 
-  it('no permite registrar un correo que ya existe', () => {
-    const { result } = usarTienda()
+  it('no permite registrar un correo que ya existe', async () => {
+    const { result } = await usarTienda()
 
     let respuesta
-    act(() => { respuesta = result.current.registrarUsuario('Otro Cliente', 'cliente@correo.cl', 'clave123') })
+    await act(async () => { respuesta = await result.current.registrarUsuario('Otro Cliente', 'cliente@correo.cl', 'clave123') })
 
     expect(respuesta.exito).toBe(false)
     expect(respuesta.mensaje).toBe('Este correo ya está registrado.')
   })
 
+  it('recupera la sesión guardada al recargar (GET /auth/me)', async () => {
+    guardarToken('token-1') // como si ya hubiera un token en sessionStorage
+    const { result } = await usarTienda()
+
+    expect(result.current.cargandoSesion).toBe(false)
+    expect(result.current.usuarioActivo.rol).toBe('Administrador')
+  })
+
   // ---------- Carrito ----------
-  it('suma las cantidades si se agrega dos veces el mismo producto', () => {
-    const { result } = usarTienda()
+  it('suma las cantidades si se agrega dos veces el mismo producto', async () => {
+    const { result } = await usarTienda()
     const guitarra = buscar(result, 'GA001')
 
     act(() => { result.current.agregarAlCarrito(guitarra, 2) })
@@ -58,9 +82,9 @@ describe('TiendaContext', () => {
     expect(result.current.totalCarrito).toBe(guitarra.precio * 3)
   })
 
-  it('no deja que el carrito supere el stock del producto', () => {
-    const { result } = usarTienda()
-    const guitarra = buscar(result, 'GA001') // stock inicial: 8
+  it('no deja que el carrito supere el stock del producto', async () => {
+    const { result } = await usarTienda()
+    const guitarra = buscar(result, 'GA001')
 
     act(() => { result.current.agregarAlCarrito(guitarra, 6) })
     act(() => { result.current.agregarAlCarrito(guitarra, 6) })
@@ -68,77 +92,87 @@ describe('TiendaContext', () => {
     expect(result.current.carrito[0].cantidad).toBe(guitarra.stock)
   })
 
-  it('no deja bajar la cantidad del carrito de 1', () => {
-    const { result } = usarTienda()
-    const guitarra = buscar(result, 'GA001')
+  it('no deja bajar la cantidad del carrito de 1', async () => {
+    const { result } = await usarTienda()
 
-    act(() => { result.current.agregarAlCarrito(guitarra, 2) })
+    act(() => { result.current.agregarAlCarrito(buscar(result, 'GA001'), 2) })
     act(() => { result.current.cambiarCantidadCarrito('GA001', 0) })
 
     expect(result.current.carrito[0].cantidad).toBe(1)
   })
 
-  it('al cerrar sesión, vacía el carrito', () => {
-    const { result } = usarTienda()
+  it('al cerrar sesión, borra el token y vacía el carrito', async () => {
+    const { result } = await usarTienda()
 
-    act(() => { result.current.iniciarSesion('cliente@correo.cl', 'cliente123') })
+    await entrar(result, 'cliente@correo.cl', 'cliente123')
     act(() => { result.current.agregarAlCarrito(buscar(result, 'GA001'), 1) })
     act(() => { result.current.cerrarSesion() })
 
     expect(result.current.usuarioActivo).toBeNull()
     expect(result.current.carrito).toHaveLength(0)
+    expect(sessionStorage.getItem('sv_token')).toBeNull()
   })
 
   // ---------- Pedidos ----------
-  it('al crear un pedido, descuenta el stock y vacía el carrito', () => {
-    const { result } = usarTienda()
+  it('al crear un pedido, la API descuenta el stock y se vacía el carrito', async () => {
+    const { result } = await usarTienda()
     const stockInicial = buscar(result, 'GA001').stock
 
-    act(() => { result.current.iniciarSesion('cliente@correo.cl', 'cliente123') })
+    await entrar(result, 'cliente@correo.cl', 'cliente123')
     act(() => { result.current.agregarAlCarrito(buscar(result, 'GA001'), 2) })
 
-    let pedido
-    act(() => {
-      pedido = result.current.crearPedido({
+    let respuesta
+    await act(async () => {
+      respuesta = await result.current.crearPedido({
         nombre: 'Cliente Prueba',
-        direccion: 'Av. Libertad 450',
         telefono: '+56912345678',
-        tipoEntrega: 'Despacho Starken',
+        direccion: null,
+        tipoEntrega: 'Retiro en Tienda (Viña del Mar)',
+        metodoPago: 'Tarjeta de crédito',
       })
     })
+    await esperarCargas() // vuelve a leer el catálogo
 
-    expect(pedido.estado).toBe('En preparación')
-    expect(pedido.clienteCorreo).toBe('cliente@correo.cl')
-    expect(result.current.pedidos[0].id).toBe(pedido.id)
+    expect(respuesta.exito).toBe(true)
+    expect(respuesta.pedido.estado).toBe('En preparación')
+    expect(result.current.pedidos[0].id).toBe(respuesta.pedido.id)
     expect(buscar(result, 'GA001').stock).toBe(stockInicial - 2)
     expect(result.current.carrito).toHaveLength(0)
   })
 
-  it('cambia el estado de un pedido', () => {
-    const { result } = usarTienda()
+  it('el administrador cambia el estado de un pedido', async () => {
+    const { result } = await usarTienda()
+    await entrar(result, 'admin@sonidovivo.cl', 'admin123')
 
-    act(() => { result.current.cambiarEstadoPedido('PED-1001', 'Cancelado') })
+    await act(async () => { await result.current.cambiarEstadoPedido('PED-1002', 'Enviado') })
 
-    const pedido = result.current.pedidos.find((p) => p.id === 'PED-1001')
-    expect(pedido.estado).toBe('Cancelado')
+    expect(result.current.pedidos.find((p) => p.id === 'PED-1002').estado).toBe('Enviado')
   })
 
   // ---------- Administración ----------
-  it('al editar un usuario sin contraseña, conserva la anterior', () => {
-    const { result } = usarTienda()
-    const cliente = result.current.usuarios.find((u) => u.id === 3)
+  it('al editar un usuario sin contraseña, conserva la anterior', async () => {
+    const { result } = await usarTienda()
+    await entrar(result, 'admin@sonidovivo.cl', 'admin123')
+    const clienteActual = result.current.usuarios.find((u) => u.id === 3)
 
-    act(() => { result.current.guardarUsuario({ ...cliente, nombre: 'Cliente Editado', password: '' }) })
+    let respuesta
+    await act(async () => { respuesta = await result.current.guardarUsuario({ ...clienteActual, nombre: 'Cliente Editado', password: '' }) })
 
-    const editado = result.current.usuarios.find((u) => u.id === 3)
-    expect(editado.nombre).toBe('Cliente Editado')
-    expect(editado.password).toBe('cliente123')
+    expect(respuesta.exito).toBe(true)
+    expect(result.current.usuarios.find((u) => u.id === 3).nombre).toBe('Cliente Editado')
+
+    // La contraseña anterior sigue funcionando
+    act(() => { result.current.cerrarSesion() })
+    const login = await entrar(result, 'cliente@correo.cl', 'cliente123')
+    expect(login.exito).toBe(true)
   })
 
-  it('al renombrar una categoría, sus productos se actualizan', () => {
-    const { result } = usarTienda()
+  it('al renombrar una categoría, sus productos se actualizan', async () => {
+    const { result } = await usarTienda()
+    await entrar(result, 'admin@sonidovivo.cl', 'admin123')
 
-    act(() => { result.current.guardarCategoria('Bajos', { nombre: 'Bajos Eléctricos', imagen: '' }) })
+    await act(async () => { await result.current.guardarCategoria('Bajos', { nombre: 'Bajos Eléctricos', imagen: '' }) })
+    await esperarCargas()
 
     expect(result.current.categorias.some((c) => c.nombre === 'Bajos Eléctricos')).toBe(true)
     expect(buscar(result, 'BA001').categoria).toBe('Bajos Eléctricos')

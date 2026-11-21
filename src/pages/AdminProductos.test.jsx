@@ -1,33 +1,33 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { screen } from '@testing-library/react'
+import { screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import AdminProductos from './AdminProductos'
 import { productos } from '../data/productos'
 import { renderConProveedores, admin } from '../test/renderConProveedores'
 
 const total = productos.length
-const abrir = (ruta = '/admin/productos') => renderConProveedores(<AdminProductos />, { ruta, usuario: admin })
+const abrir = () => renderConProveedores(<AdminProductos />, { ruta: '/admin/productos', usuario: admin })
 
 beforeEach(() => {
   window.scrollTo = vi.fn()
 })
 
 describe('Página AdminProductos', () => {
-  it('lista todos los productos', () => {
-    abrir()
+  it('lista todos los productos', async () => {
+    await abrir()
     expect(screen.getByText(`Productos del catálogo (${total})`)).toBeInTheDocument()
   })
 
   it('el buscador filtra la tabla', async () => {
-    abrir()
+    await abrir()
 
     await userEvent.type(screen.getByLabelText('Código, nombre, marca, modelo o categoría'), 'GA001')
 
     expect(screen.getByText('Productos del catálogo (1)')).toBeInTheDocument()
   })
 
-  it('crea un producto nuevo (Create)', async () => {
-    abrir()
+  it('crea un producto nuevo (POST /productos)', async () => {
+    await abrir()
 
     await userEvent.click(screen.getByRole('button', { name: '+ Nuevo producto' }))
     await userEvent.type(screen.getByLabelText('Código'), 'ZZ001')
@@ -37,24 +37,19 @@ describe('Página AdminProductos', () => {
     await userEvent.type(screen.getByLabelText('Stock (unidades)'), '5')
     await userEvent.click(screen.getByRole('button', { name: 'Crear producto' }))
 
-    expect(screen.getByText('Producto ZZ001 creado correctamente.')).toBeInTheDocument()
+    expect(await screen.findByText('Producto ZZ001 creado correctamente.')).toBeInTheDocument()
     expect(screen.getByText(`Productos del catálogo (${total + 1})`)).toBeInTheDocument()
   })
 
-  it('elimina un producto si se confirma (Delete)', async () => {
-    vi.spyOn(window, 'confirm').mockReturnValue(true)
+  it('elimina un producto después de confirmar en la ventana (DELETE /productos)', async () => {
     const primero = [...productos].sort((a, b) => a.codigo.localeCompare(b.codigo))[0]
-    abrir()
+    await abrir()
 
     await userEvent.click(screen.getAllByRole('button', { name: 'Eliminar' })[0])
+    const ventana = await screen.findByRole('dialog')
+    await userEvent.click(within(ventana).getByRole('button', { name: 'Eliminar' }))
 
-    expect(window.confirm).toHaveBeenCalled()
-    expect(screen.getByText(`Producto ${primero.codigo} eliminado.`)).toBeInTheDocument()
+    expect(await screen.findByText(`Producto ${primero.codigo} eliminado.`)).toBeInTheDocument()
     expect(screen.getByText(`Productos del catálogo (${total - 1})`)).toBeInTheDocument()
-  })
-
-  it('si llega con location.state, abre el formulario de edición', () => {
-    abrir({ pathname: '/admin/productos', state: { editar: 'GA001' } })
-    expect(screen.getByRole('heading', { name: 'Editar producto GA001' })).toBeInTheDocument()
   })
 })

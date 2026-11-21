@@ -17,15 +17,15 @@ const conRuta = (ruta) =>
   )
 
 describe('Página DetalleProducto', () => {
-  it('muestra la ficha del producto y su nombre en la pestaña (useEffect)', () => {
-    conRuta('/producto/GA001')
+  it('muestra la ficha del producto y su nombre en la pestaña (useEffect)', async () => {
+    await conRuta('/producto/GA001')
 
     expect(screen.getByRole('heading', { level: 1, name: guitarra.nombre })).toBeInTheDocument()
     expect(document.title).toBe(`${guitarra.nombre} · Sonido Vivo`)
   })
 
   it('agrega el producto al carrito y muestra la confirmación', async () => {
-    conRuta('/producto/GA001')
+    await conRuta('/producto/GA001')
 
     await userEvent.click(screen.getByRole('button', { name: 'Añadir al Carrito' }))
 
@@ -33,8 +33,8 @@ describe('Página DetalleProducto', () => {
     expect(screen.getByRole('button', { name: 'Carrito (1)' })).toBeInTheDocument()
   })
 
-  it('avisa si el producto no existe', () => {
-    conRuta('/producto/XX999')
+  it('avisa si el producto no existe', async () => {
+    await conRuta('/producto/XX999')
     expect(screen.getByText('Producto no encontrado')).toBeInTheDocument()
   })
 })

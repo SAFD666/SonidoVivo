@@ -14,16 +14,16 @@ const conRuta = (ruta) =>
   )
 
 describe('Página Categorías', () => {
-  it('muestra solo los productos de la categoría de la URL', () => {
+  it('muestra solo los productos de la categoría de la URL', async () => {
     const bajos = productos.filter((p) => p.categoria === 'Bajos')
-    conRuta('/categoria/bajos')
+    await conRuta('/categoria/bajos')
 
     expect(screen.getByRole('heading', { level: 1, name: 'Bajos' })).toBeInTheDocument()
     expect(screen.getAllByRole('article')).toHaveLength(bajos.length)
   })
 
-  it('avisa si la categoría no tiene productos', () => {
-    conRuta('/categoria/violines')
+  it('avisa si la categoría no tiene productos', async () => {
+    await conRuta('/categoria/violines')
     expect(screen.getByText('No hay productos en esta categoría')).toBeInTheDocument()
   })
 })

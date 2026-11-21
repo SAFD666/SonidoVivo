@@ -8,8 +8,8 @@ import { renderConProveedores } from '../test/renderConProveedores'
 const enOferta = productos.filter((p) => p.esOferta)
 
 describe('Página Ofertas', () => {
-  it('muestra solo los productos en oferta', () => {
-    renderConProveedores(<Ofertas />, { ruta: '/ofertas' })
+  it('muestra solo los productos en oferta', async () => {
+    await renderConProveedores(<Ofertas />, { ruta: '/ofertas' })
 
     expect(screen.getByRole('heading', { name: 'Ofertas Especiales' })).toBeInTheDocument()
     expect(screen.getAllByRole('article')).toHaveLength(enOferta.length)
@@ -18,7 +18,7 @@ describe('Página Ofertas', () => {
   it('filtra las ofertas por marca', async () => {
     const marca = enOferta[0].marca
     const deEsaMarca = enOferta.filter((p) => p.marca === marca)
-    renderConProveedores(<Ofertas />, { ruta: '/ofertas' })
+    await renderConProveedores(<Ofertas />, { ruta: '/ofertas' })
 
     await userEvent.click(screen.getByLabelText(marca))
     await userEvent.click(screen.getByRole('button', { name: 'Aplicar Filtros' }))

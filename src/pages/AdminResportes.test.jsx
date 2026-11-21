@@ -7,8 +7,8 @@ import { renderConProveedores, admin } from '../test/renderConProveedores'
 const abrir = () => renderConProveedores(<AdminReportes />, { ruta: '/admin/reportes', usuario: admin })
 
 describe('Página AdminReportes', () => {
-  it('muestra las tres secciones del reporte', () => {
-    abrir()
+  it('muestra las tres secciones del reporte', async () => {
+    await abrir()
 
     expect(screen.getByRole('heading', { level: 1, name: 'Reportes' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Pedidos por estado' })).toBeInTheDocument()
@@ -16,11 +16,11 @@ describe('Página AdminReportes', () => {
     expect(screen.getByRole('heading', { name: 'Productos más vendidos' })).toBeInTheDocument()
   })
 
-  it('los productos vendidos aparecen en el ranking', () => {
+  it('los productos vendidos aparecen en el ranking', async () => {
     const codigosVendidos = pedidosIniciales
       .filter((p) => p.estado !== 'Cancelado')
       .flatMap((p) => p.items.map((item) => item.codigo))
-    abrir()
+    await abrir()
 
     codigosVendidos.forEach((codigo) => {
       expect(screen.getByText(codigo)).toBeInTheDocument()

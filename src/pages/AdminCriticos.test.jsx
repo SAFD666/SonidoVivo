@@ -17,15 +17,15 @@ beforeEach(() => {
 })
 
 describe('Página AdminCriticos', () => {
-  it('muestra solo los productos con stock crítico', () => {
-    renderConProveedores(<AdminCriticos />, { ruta: '/admin/criticos', usuario: admin })
+  it('muestra solo los productos con stock crítico', async () => {
+    await renderConProveedores(<AdminCriticos />, { ruta: '/admin/criticos', usuario: admin })
 
     expect(screen.getByRole('heading', { level: 1, name: 'Stock crítico' })).toBeInTheDocument()
     expect(screen.getByText(`Productos del catálogo (${criticos.length})`)).toBeInTheDocument()
   })
 
   it('"Editar" abre ese producto en AdminProductos (location.state)', async () => {
-    renderConProveedores(
+    await renderConProveedores(
       <Routes>
         <Route path="/admin/criticos" element={<AdminCriticos />} />
         <Route path="/admin/productos" element={<AdminProductos />} />
@@ -35,6 +35,6 @@ describe('Página AdminCriticos', () => {
 
     await userEvent.click(screen.getAllByRole('button', { name: 'Editar' })[0])
 
-    expect(screen.getByRole('heading', { name: `Editar producto ${criticos[0].codigo}` })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { name: `Editar producto ${criticos[0].codigo}` })).toBeInTheDocument()
   })
 })

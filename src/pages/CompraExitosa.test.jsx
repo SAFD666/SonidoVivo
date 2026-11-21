@@ -7,8 +7,8 @@ import { renderConProveedores, cliente } from '../test/renderConProveedores'
 const pedido = pedidosIniciales[0]
 
 describe('Página CompraExitosa', () => {
-  it('muestra el pedido que recibe por location.state', () => {
-    renderConProveedores(<CompraExitosa />, {
+  it('muestra el pedido que recibe por location.state', async () => {
+    await renderConProveedores(<CompraExitosa />, {
       ruta: { pathname: '/compra-exitosa', state: { pedido } },
       usuario: cliente,
     })
@@ -18,8 +18,8 @@ describe('Página CompraExitosa', () => {
     expect(screen.getByText(pedido.direccion)).toBeInTheDocument()
   })
 
-  it('si se entra directo, sin pedido, muestra el aviso', () => {
-    renderConProveedores(<CompraExitosa />, { ruta: '/compra-exitosa', usuario: cliente })
+  it('si se entra directo, sin pedido, muestra el aviso', async () => {
+    await renderConProveedores(<CompraExitosa />, { ruta: '/compra-exitosa', usuario: cliente })
     expect(screen.getByText('No hay una compra reciente')).toBeInTheDocument()
   })
 })

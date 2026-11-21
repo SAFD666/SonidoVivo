@@ -14,21 +14,21 @@ const conRuta = (ruta) =>
   )
 
 describe('Página AdminHistorial', () => {
-  it('muestra los pedidos del usuario de la URL', () => {
+  it('muestra los pedidos del usuario de la URL', async () => {
     const suyos = pedidosIniciales.filter((p) => p.clienteCorreo === cliente.correo)
-    conRuta(`/admin/usuarios/${cliente.id}/pedidos`)
+    await conRuta(`/admin/usuarios/${cliente.id}/pedidos`)
 
     expect(screen.getByRole('heading', { level: 1, name: `Historial de ${cliente.nombre}` })).toBeInTheDocument()
     expect(screen.getByText(`Pedidos registrados en la tienda (${suyos.length})`)).toBeInTheDocument()
   })
 
-  it('avisa si el usuario no tiene pedidos', () => {
-    conRuta(`/admin/usuarios/${vendedor.id}/pedidos`)
+  it('avisa si el usuario no tiene pedidos', async () => {
+    await conRuta(`/admin/usuarios/${vendedor.id}/pedidos`)
     expect(screen.getByText('Este usuario todavía no ha realizado pedidos.')).toBeInTheDocument()
   })
 
-  it('avisa si el usuario no existe', () => {
-    conRuta('/admin/usuarios/999/pedidos')
+  it('avisa si el usuario no existe', async () => {
+    await conRuta('/admin/usuarios/999/pedidos')
     expect(screen.getByText('Usuario no encontrado')).toBeInTheDocument()
   })
 })

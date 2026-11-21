@@ -23,30 +23,30 @@ beforeEach(() => {
 })
 
 describe('Página AdminUsuarios', () => {
-  it('lista todos los usuarios', () => {
-    abrir()
+  it('lista todos los usuarios (GET /usuarios)', async () => {
+    await abrir()
     expect(screen.getByText(`Usuarios registrados (${total})`)).toBeInTheDocument()
   })
 
-  it('crea un usuario nuevo', async () => {
-    abrir()
+  it('crea un usuario nuevo (POST /usuarios)', async () => {
+    await abrir()
 
     await llenarNuevoUsuario('Ana Prueba', 'ana@correo.cl')
 
-    expect(screen.getByText('Usuario Ana Prueba creado.')).toBeInTheDocument()
+    expect(await screen.findByText('Usuario Ana Prueba creado.')).toBeInTheDocument()
     expect(screen.getByText(`Usuarios registrados (${total + 1})`)).toBeInTheDocument()
   })
 
-  it('no permite repetir un correo', async () => {
-    abrir()
+  it('no permite repetir un correo (409)', async () => {
+    await abrir()
 
     await llenarNuevoUsuario('Otro Cliente', cliente.correo)
 
-    expect(screen.getByRole('alert')).toHaveTextContent('Ya existe un usuario con ese correo.')
+    expect(await screen.findByRole('alert')).toHaveTextContent('Ya existe un usuario con ese correo.')
   })
 
   it('"Ver pedidos" abre el historial del cliente', async () => {
-    renderConProveedores(
+    await renderConProveedores(
       <Routes>
         <Route path="/admin/usuarios" element={<AdminUsuarios />} />
         <Route path="/admin/usuarios/:id/pedidos" element={<AdminHistorial />} />
@@ -56,6 +56,6 @@ describe('Página AdminUsuarios', () => {
 
     await userEvent.click(screen.getByRole('button', { name: 'Ver pedidos' }))
 
-    expect(screen.getByRole('heading', { level: 1, name: `Historial de ${cliente.nombre}` })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { level: 1, name: `Historial de ${cliente.nombre}` })).toBeInTheDocument()
   })
 })

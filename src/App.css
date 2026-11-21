@@ -1656,3 +1656,31 @@ footer.footer-sonido-vivo a {
     height: 60px;
   }
 }
+/* =========================================================
+   CELULARES: el encabezado no se queda fijo arriba
+   En pantallas angostas el logo, el buscador y el menú quedan
+   uno debajo del otro; si el encabezado fuera "sticky", taparía
+   el contenido al bajar por el catálogo o el blog.
+   ========================================================= */
+@media (max-width: 768px) {
+  .header-sonido-vivo {
+    position: static;          /* sube junto con la página */
+    padding: 0.75rem 1rem;
+    gap: 10px;
+  }
+
+  .logo-container img {
+    width: 42px;               /* logo más pequeño */
+    height: auto;
+  }
+
+  .logo-container h1 {
+    font-size: 1.4rem;
+    margin: 0;
+  }
+
+  .menu-navegacion .btn-sonido-vivo {
+    padding: 6px 12px;         /* botones del menú más compactos */
+    font-size: 0.9rem;
+  }
+}
