@@ -11,7 +11,7 @@ function AdminUsuarios() {
   const { usuarios, usuarioActivo, guardarUsuario } = useTienda();
   const navigate = useNavigate();
   const [busqueda, setBusqueda] = useState("");
-  const [formulario, setFormulario] = useState(null); 
+  const [formulario, setFormulario] = useState(null);
   const [mensaje, setMensaje] = useState("");
   const [error, setError] = useState("");
 
@@ -29,8 +29,9 @@ function AdminUsuarios() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const guardar = (datos) => {
-    const resultado = guardarUsuario(datos);
+  // async: crea (POST /usuarios) o edita (PUT /usuarios/{id}); desmarcar "activo" desactiva la cuenta
+  const guardar = async (datos) => {
+    const resultado = await guardarUsuario(datos);
     if (!resultado.exito) {
       setError(resultado.mensaje);
       return;
@@ -60,7 +61,7 @@ function AdminUsuarios() {
       )}
 
       <section className="admin-bloque">
-        <h2 id="titulo-buscar-usuarios" className="visually-hidden">Buscar usuarios</h2>
+        <h2 className="visually-hidden">Buscar usuarios</h2>
         <form className="filtros-admin" onSubmit={(e) => e.preventDefault()}>
           <fieldset>
             <legend>Buscar usuarios</legend>
@@ -78,7 +79,7 @@ function AdminUsuarios() {
       </section>
 
       <section className="admin-bloque">
-        <h2 id="titulo-listado-usuarios" className="visually-hidden">Listado de usuarios</h2>
+        <h2 className="visually-hidden">Listado de usuarios</h2>
         {usuariosVisibles.length > 0 ? (
           <TablaUsuarios
             usuarios={usuariosVisibles}

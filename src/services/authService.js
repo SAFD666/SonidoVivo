@@ -11,3 +11,9 @@ export async function registrar(nombre, correo, password) {
   const respuesta = await api.post('/auth/register', { nombre, correo, password })
   return respuesta.data
 }
+
+// GET /auth/me → el usuario dueño del token (se usa al recargar la página)
+export async function obtenerMiPerfil() {
+  const respuesta = await api.get('/auth/me')
+  return respuesta.data
+}

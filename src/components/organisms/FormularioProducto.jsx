@@ -16,12 +16,24 @@ const PRODUCTO_VACIO = {
   esOferta: false,
 };
 
+// La API puede enviar campos opcionales en null (modelo, descripción, imagen).
+// Los inputs de React necesitan texto, así que los null se convierten en "".
+function sinNulos(producto) {
+  const limpio = { ...PRODUCTO_VACIO };
+  Object.keys(producto).forEach((clave) => {
+    limpio[clave] = producto[clave] ?? PRODUCTO_VACIO[clave] ?? "";
+  });
+  return limpio;
+}
+
 function FormularioProducto(props) {
-  const { productoInicial, categorias = [], codigosExistentes = [], onGuardar, onCancelar } = props;
-  const esEdicion = Boolean(productoInicial);
+  const categorias = props.categorias || [];
+  const codigosExistentes = props.codigosExistentes || [];
+  const esEdicion = Boolean(props.productoInicial);
+
   const [datos, setDatos] = useState(
-    productoInicial
-      ? { ...PRODUCTO_VACIO, ...productoInicial }
+    props.productoInicial
+      ? sinNulos(props.productoInicial)
       : { ...PRODUCTO_VACIO, categoria: categorias[0]?.nombre || "" }
   );
   const [errores, setErrores] = useState({});
@@ -65,7 +77,7 @@ function FormularioProducto(props) {
     if (!validar()) return;
 
     const codigo = String(datos.codigo).trim().toUpperCase();
-    onGuardar({
+    props.onGuardar({
       ...datos,
       id: codigo,
       codigo,
@@ -144,7 +156,7 @@ function FormularioProducto(props) {
 
       <div className="acciones-formulario">
         <Boton texto={esEdicion ? "Guardar cambios" : "Crear producto"} type="submit" className="btn-sonido-vivo" />
-        <Boton texto="Cancelar" type="button" className="btn btn-secondary" onClick={onCancelar} />
+        <Boton texto="Cancelar" type="button" className="btn btn-secondary" onClick={props.onCancelar} />
       </div>
     </form>
   );

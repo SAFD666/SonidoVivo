@@ -10,10 +10,13 @@ function AdminPerfil() {
   const [password, setPassword] = useState("");
   const [errores, setErrores] = useState({});
   const [mensaje, setMensaje] = useState("");
+  const [error, setError] = useState("");
 
-  const enviar = (e) => {
+  // async: PUT /usuarios/{id} con el id del propio usuario (el backend no deja editar cuentas ajenas)
+  const enviar = async (e) => {
     e.preventDefault();
     setMensaje("");
+    setError("");
 
     const nuevosErrores = {};
     if (nombre.trim().length < 3) nuevosErrores.nombre = "El nombre debe tener al menos 3 caracteres.";
@@ -21,16 +24,19 @@ function AdminPerfil() {
     setErrores(nuevosErrores);
     if (Object.keys(nuevosErrores).length > 0) return;
 
-    const resultado = guardarUsuario({ ...usuarioActivo, nombre: nombre.trim(), password });
+    const resultado = await guardarUsuario({ ...usuarioActivo, nombre: nombre.trim(), password });
     if (resultado.exito) {
       setMensaje("Tus datos se actualizaron correctamente.");
       setPassword("");
+    } else {
+      setError(resultado.mensaje);
     }
   };
 
   return (
     <PlantillaAdmin titulo="Mi perfil">
       {mensaje && <p className="mensaje-exito" role="status">{mensaje}</p>}
+      {error && <p className="alert alert-danger" role="alert">{error}</p>}
 
       <div className="row g-4">
         <section className="col-12 col-lg-5">
