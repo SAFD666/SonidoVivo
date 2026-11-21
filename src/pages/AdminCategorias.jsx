@@ -33,14 +33,15 @@ function AdminCategorias() {
     setError("");
   };
 
-  const enviar = (e) => {
+  // async: POST /categorias o PUT /categorias/{id}
+  const enviar = async (e) => {
     e.preventDefault();
     if (datos.nombre.trim().length < 3) {
       setError("El nombre debe tener al menos 3 caracteres.");
       return;
     }
 
-    const resultado = guardarCategoria(editando, datos);
+    const resultado = await guardarCategoria(editando, datos);
     if (!resultado.exito) {
       setError(resultado.mensaje);
       return;
@@ -90,7 +91,7 @@ function AdminCategorias() {
               </thead>
               <tbody>
                 {categorias.map((categoria) => (
-                  <tr key={categoria.nombre}>
+                  <tr key={categoria.id ?? categoria.nombre}>
                     <td><img src={categoria.imagen} alt={categoria.nombre} className="tabla-miniatura" /></td>
                     <th scope="row">{categoria.nombre}</th>
                     <td className="text-end">{contarProductos(categoria.nombre)}</td>
