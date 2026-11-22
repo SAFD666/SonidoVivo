@@ -6,15 +6,15 @@ import Nosotros from './Nosotros'
 import { renderConProveedores } from '../test/renderConProveedores'
 
 describe('Página Nosotros', () => {
-  it('muestra la información de la tienda', () => {
-    renderConProveedores(<Nosotros />)
+  it('muestra la información de la tienda', async () => {
+    await renderConProveedores(<Nosotros />)
 
     expect(screen.getByRole('heading', { name: 'Sobre Sonido Vivo' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Quiénes somos' })).toBeInTheDocument()
   })
 
   it('el botón lleva al catálogo', async () => {
-    renderConProveedores(
+    await renderConProveedores(
       <Routes>
         <Route path="/" element={<Nosotros />} />
         <Route path="/catalogo" element={<p>Página del catálogo</p>} />

@@ -14,15 +14,15 @@ const conRuta = (ruta) =>
   )
 
 describe('Página DetalleBlog', () => {
-  it('muestra la entrada que indica la URL', () => {
+  it('muestra la entrada que indica la URL', async () => {
     const entrada = entradasBlog[1]
-    conRuta(`/blog/${entrada.id}`)
+    await conRuta(`/blog/${entrada.id}`)
 
     expect(screen.getByRole('heading', { name: entrada.titulo })).toBeInTheDocument()
   })
 
-  it('avisa si la entrada no existe', () => {
-    conRuta('/blog/no-existe')
+  it('avisa si la entrada no existe', async () => {
+    await conRuta('/blog/no-existe')
     expect(screen.getByText('Entrada no encontrada')).toBeInTheDocument()
   })
 })

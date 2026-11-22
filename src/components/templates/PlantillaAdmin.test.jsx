@@ -4,8 +4,8 @@ import PlantillaAdmin from './PlantillaAdmin'
 import { renderConProveedores, admin, vendedor } from '../../test/renderConProveedores'
 
 describe('PlantillaAdmin', () => {
-  it('muestra el título (props.titulo) y el contenido (props.children)', () => {
-    renderConProveedores(
+  it('muestra el título (props.titulo) y el contenido (props.children)', async () => {
+    await renderConProveedores(
       <PlantillaAdmin titulo="Gestión de productos"><p>Tabla de productos</p></PlantillaAdmin>,
       { usuario: admin }
     )
@@ -14,13 +14,13 @@ describe('PlantillaAdmin', () => {
     expect(screen.getByText('Tabla de productos')).toBeInTheDocument()
   })
 
-  it('el administrador ve el enlace a Usuarios', () => {
-    renderConProveedores(<PlantillaAdmin titulo="Inicio"><p>Panel</p></PlantillaAdmin>, { usuario: admin })
+  it('el administrador ve el enlace a Usuarios', async () => {
+    await renderConProveedores(<PlantillaAdmin titulo="Inicio"><p>Panel</p></PlantillaAdmin>, { usuario: admin })
     expect(screen.getByRole('link', { name: 'Usuarios' })).toBeInTheDocument()
   })
 
-  it('el vendedor no ve el enlace a Usuarios', () => {
-    renderConProveedores(<PlantillaAdmin titulo="Inicio"><p>Panel</p></PlantillaAdmin>, { usuario: vendedor })
+  it('el vendedor no ve el enlace a Usuarios', async () => {
+    await renderConProveedores(<PlantillaAdmin titulo="Inicio"><p>Panel</p></PlantillaAdmin>, { usuario: vendedor })
     expect(screen.queryByRole('link', { name: 'Usuarios' })).not.toBeInTheDocument()
   })
 })

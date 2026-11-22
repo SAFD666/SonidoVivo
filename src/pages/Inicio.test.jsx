@@ -7,15 +7,15 @@ import { categoriasIniciales } from '../data/categorias'
 import { renderConProveedores } from '../test/renderConProveedores'
 
 describe('Página Inicio', () => {
-  it('muestra el banner y una tarjeta por cada categoría', () => {
-    renderConProveedores(<Inicio />)
+  it('muestra el banner y una tarjeta por cada categoría de la API', async () => {
+    await renderConProveedores(<Inicio />)
 
     expect(screen.getByRole('heading', { name: 'Instrumentos Musicales y Equipos de Sonido' })).toBeInTheDocument()
     expect(screen.getAllByRole('article')).toHaveLength(categoriasIniciales.length)
   })
 
   it('al hacer clic en una categoría, navega a su página', async () => {
-    renderConProveedores(
+    await renderConProveedores(
       <Routes>
         <Route path="/" element={<Inicio />} />
         <Route path="/categoria/:slug" element={<p>Página de la categoría</p>} />

@@ -6,7 +6,7 @@ import { renderConProveedores } from '../test/renderConProveedores'
 
 describe('Página Contacto', () => {
   it('muestra los errores si se envía vacío', async () => {
-    renderConProveedores(<Contacto />)
+    await renderConProveedores(<Contacto />)
 
     await userEvent.click(screen.getByRole('button', { name: 'Enviar mensaje' }))
 
@@ -15,7 +15,7 @@ describe('Página Contacto', () => {
   })
 
   it('muestra la confirmación al enviar un mensaje válido', async () => {
-    renderConProveedores(<Contacto />)
+    await renderConProveedores(<Contacto />)
 
     await userEvent.type(screen.getByLabelText('Nombre'), 'Juan Pérez')
     await userEvent.type(screen.getByLabelText('Correo electrónico'), 'juan@correo.cl')

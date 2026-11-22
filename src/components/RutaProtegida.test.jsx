@@ -13,18 +13,19 @@ const rutas = (
 )
 
 describe('RutaProtegida', () => {
-  it('sin sesión, redirige al login', () => {
-    renderConProveedores(rutas, { ruta: '/privado' })
+  it('sin sesión, redirige al login', async () => {
+    await renderConProveedores(rutas, { ruta: '/privado' })
     expect(screen.getByText('Página de login')).toBeInTheDocument()
   })
 
-  it('con el rol permitido, muestra el contenido (props.children)', () => {
-    renderConProveedores(rutas, { ruta: '/privado', usuario: cliente })
+  it('con el rol permitido, muestra el contenido (props.children)', async () => {
+    await renderConProveedores(rutas, { ruta: '/privado', usuario: cliente })
     expect(screen.getByText('Contenido privado')).toBeInTheDocument()
   })
 
-  it('con un rol no permitido, redirige al inicio', () => {
-    renderConProveedores(rutas, { ruta: '/privado', usuario: admin })
-    expect(screen.getByText('Página de inicio')).toBeInTheDocument()
+  it('con un rol no permitido, muestra Acceso denegado', async () => {
+    await renderConProveedores(rutas, { ruta: '/privado', usuario: admin })
+    expect(screen.getByRole('heading', { name: 'Acceso denegado' })).toBeInTheDocument()
+    expect(screen.queryByText('Contenido privado')).not.toBeInTheDocument()
   })
 })

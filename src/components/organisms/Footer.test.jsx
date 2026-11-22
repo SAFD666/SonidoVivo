@@ -6,8 +6,8 @@ import Footer from './Footer'
 import { renderConProveedores } from '../../test/renderConProveedores'
 
 describe('Footer', () => {
-  it('tiene los enlaces a Nosotros, Blog y Contacto', () => {
-    renderConProveedores(<Footer />)
+  it('tiene los enlaces a Nosotros, Blog y Contacto', async () => {
+    await renderConProveedores(<Footer />)
 
     expect(screen.getByRole('link', { name: 'Nosotros' })).toHaveAttribute('href', '/nosotros')
     expect(screen.getByRole('link', { name: 'Blog' })).toHaveAttribute('href', '/blog')
@@ -15,7 +15,7 @@ describe('Footer', () => {
   })
 
   it('el botón lleva al catálogo', async () => {
-    renderConProveedores(
+    await renderConProveedores(
       <Routes>
         <Route path="/" element={<Footer />} />
         <Route path="/catalogo" element={<p>Página del catálogo</p>} />

@@ -14,17 +14,17 @@ const conRuta = (ruta) =>
   )
 
 describe('Página AdminComprobante', () => {
-  it('muestra el comprobante del pedido de la URL', () => {
+  it('muestra el comprobante del pedido de la URL', async () => {
     const pedido = pedidosIniciales[0]
-    conRuta(`/admin/pedidos/${pedido.id}`)
+    await conRuta(`/admin/pedidos/${pedido.id}`)
 
     expect(screen.getByRole('heading', { level: 1, name: `Comprobante ${pedido.id}` })).toBeInTheDocument()
     expect(screen.getByText(pedido.clienteCorreo)).toBeInTheDocument()
     expect(screen.getByText(pedido.items[0].nombre)).toBeInTheDocument()
   })
 
-  it('avisa si el pedido no existe', () => {
-    conRuta('/admin/pedidos/PED-0000')
+  it('avisa si el pedido no existe', async () => {
+    await conRuta('/admin/pedidos/PED-0000')
     expect(screen.getByText('Pedido no encontrado')).toBeInTheDocument()
   })
 })

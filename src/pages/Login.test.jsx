@@ -25,7 +25,7 @@ async function ingresar(correo, password) {
 
 describe('Página Login', () => {
   it('muestra los errores de validación si se envía vacío', async () => {
-    conRutas()
+    await conRutas()
 
     await userEvent.click(screen.getByRole('button', { name: 'Ingresar' }))
 
@@ -33,37 +33,37 @@ describe('Página Login', () => {
     expect(screen.getByText('La contraseña debe tener al menos 6 caracteres.')).toBeInTheDocument()
   })
 
-  it('avisa si el correo o la contraseña son incorrectos', async () => {
-    conRutas()
+  it('avisa si el correo o la contraseña son incorrectos (401)', async () => {
+    await conRutas()
 
     await ingresar(cliente.correo, 'claveMala')
 
-    expect(screen.getByText('Correo o contraseña incorrectos.')).toBeInTheDocument()
+    expect(await screen.findByText('Correo o contraseña incorrectos.')).toBeInTheDocument()
   })
 
   it('un Cliente que inicia sesión vuelve al inicio', async () => {
-    conRutas()
+    await conRutas()
 
     await ingresar(cliente.correo, cliente.password)
 
-    expect(screen.getByText('Página de inicio')).toBeInTheDocument()
+    expect(await screen.findByText('Página de inicio')).toBeInTheDocument()
   })
 
   it('un Administrador que inicia sesión va al panel', async () => {
-    conRutas()
+    await conRutas()
 
     await ingresar(admin.correo, admin.password)
 
-    expect(screen.getByText('Panel admin')).toBeInTheDocument()
+    expect(await screen.findByText('Panel admin')).toBeInTheDocument()
   })
 
   it('si viene desde otra página, avisa y vuelve a ella al ingresar', async () => {
-    conRutas({ pathname: '/login', state: { desde: '/checkout' } })
+    await conRutas({ pathname: '/login', state: { desde: '/checkout' } })
 
     expect(screen.getByText('Debes iniciar sesión para continuar.')).toBeInTheDocument()
 
     await ingresar(cliente.correo, cliente.password)
 
-    expect(screen.getByText('Página de pago')).toBeInTheDocument()
+    expect(await screen.findByText('Página de pago')).toBeInTheDocument()
   })
 })

@@ -10,8 +10,8 @@ const guitarra = productos.find((p) => p.codigo === 'GA001')
 const carritoConGuitarra = [{ ...guitarra, cantidad: 2 }]
 
 describe('Página Carrito', () => {
-  it('sin sesión, muestra los productos y pide iniciar sesión para pagar', () => {
-    renderConProveedores(<PaginaCarrito />, { carrito: carritoConGuitarra })
+  it('sin sesión, muestra los productos y pide iniciar sesión para pagar', async () => {
+    await renderConProveedores(<PaginaCarrito />, { carrito: carritoConGuitarra })
 
     expect(screen.getByRole('heading', { name: 'Mi Carrito' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: guitarra.nombre })).toBeInTheDocument()
@@ -19,7 +19,7 @@ describe('Página Carrito', () => {
   })
 
   it('con sesión, el botón "Ir a pagar" lleva al checkout', async () => {
-    renderConProveedores(
+    await renderConProveedores(
       <Routes>
         <Route path="/" element={<PaginaCarrito />} />
         <Route path="/checkout" element={<p>Página de pago</p>} />
@@ -33,7 +33,7 @@ describe('Página Carrito', () => {
   })
 
   it('al vaciar el carrito muestra el aviso de carrito vacío', async () => {
-    renderConProveedores(<PaginaCarrito />, { carrito: carritoConGuitarra })
+    await renderConProveedores(<PaginaCarrito />, { carrito: carritoConGuitarra })
 
     await userEvent.click(screen.getByRole('button', { name: 'Vaciar carrito' }))
 

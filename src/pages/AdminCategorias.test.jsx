@@ -13,27 +13,27 @@ beforeEach(() => {
 })
 
 describe('Página AdminCategorias', () => {
-  it('lista todas las categorías', () => {
-    abrir()
+  it('lista todas las categorías', async () => {
+    await abrir()
     expect(screen.getByText(`Categorías de la tienda (${total})`)).toBeInTheDocument()
   })
 
-  it('no permite crear una categoría repetida', async () => {
-    abrir()
+  it('no permite crear una categoría repetida (409)', async () => {
+    await abrir()
 
     await userEvent.type(screen.getByLabelText('Nombre'), 'Bajos')
     await userEvent.click(screen.getByRole('button', { name: 'Crear categoría' }))
 
-    expect(screen.getByText('Ya existe una categoría con ese nombre.')).toBeInTheDocument()
+    expect(await screen.findByText('Ya existe una categoría con ese nombre.')).toBeInTheDocument()
   })
 
   it('crea una categoría nueva', async () => {
-    abrir()
+    await abrir()
 
     await userEvent.type(screen.getByLabelText('Nombre'), 'Instrumentos de Viento')
     await userEvent.click(screen.getByRole('button', { name: 'Crear categoría' }))
 
-    expect(screen.getByText('Categoría "Instrumentos de Viento" creada.')).toBeInTheDocument()
-    expect(screen.getByText(`Categorías de la tienda (${total + 1})`)).toBeInTheDocument()
+    expect(await screen.findByText('Categoría "Instrumentos de Viento" creada.')).toBeInTheDocument()
+    expect(await screen.findByText(`Categorías de la tienda (${total + 1})`)).toBeInTheDocument()
   })
 })
