@@ -68,4 +68,4 @@ npm run test:run                    # pruebas unitarias (Vitest)
 | Checkout con Región → Comuna y regla de stock (409) | ✅ |
 | Mis pedidos y cambio de estado en el panel | ✅ |
 | CRUD de usuarios, productos y categorías contra la API | ✅ |
-| Pruebas Vitest de páginas adaptadas a la API (simulando los services) | Casi completado |
+| Pruebas Vitest de páginas adaptadas a la API (simulando los services) | ✅ |
