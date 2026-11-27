@@ -6,15 +6,23 @@ Tienda online de instrumentos musicales **Sonido Vivo**: catálogo, carrito, com
 |---|---|
 | **Asignatura** | DSY1104 – Desarrollo Fullstack II (2026) · Sección 005D |
 | **Equipo 7** | Sebastián Alejandro Fica Droguett (seb.fica@duocuc.cl) · Alonso Ignacio Valenzuela Gonzales (alo.valenzuela@duocuc.cl) |
-| **Repositorio backend** | URL_DEL_REPO_BACKEND |
-| **Swagger (API)** | `http://IP_PUBLICA_EC2:8080/swagger-ui.html` (la IP cambia al reiniciar el laboratorio de AWS Academy) |
-| **Tienda desplegada** | `http://IP_PUBLICA_EC2:5173` |
+| **Repositorio backend** | https://github.com/SAFD666/Backend_SonidoVivo |
+| **Tienda desplegada** | http://107.23.135.231:5173 |
+| **Swagger (API)** | http://107.23.135.231:8080/swagger-ui.html |
 | **Material complementario** | https://drive.google.com/drive/folders/1eXd8NFijBfCoC-25je-nII3zIXDd5BaY?usp=sharing |
+
+> **Sobre las direcciones públicas:** el servidor es una EC2 de AWS Academy. La IP pública cambia cada vez que se reinicia el laboratorio. Si no responde, hay que pedir al equipo la IP del día. Última IP: **107.23.135.231** (27/11/2026).
 
 ---
 
 ## Tecnologías
 React 19 + Vite · React Router · Bootstrap 5 / React Bootstrap · **Axios** · Vitest + Testing Library.
+
+## Arquitectura del despliegue
+```
+Navegador ──▶ EC2 :5173 (Vite preview) ──/api──▶ EC2 :8080 (Spring Boot) ──▶ Amazon RDS PostgreSQL (privada)
+```
+El frontend y el backend corren en la misma EC2. El **proxy de Vite** reenvía `/api` al backend, así el código no tiene la IP escrita y no hay solicitudes entre orígenes (CORS).
 
 ## Estructura
 ```
@@ -25,12 +33,18 @@ src/
 ├── services/        Axios: api.js (instancia, token, errores) y un service por recurso
 ├── dto/             Arman el cuerpo exacto que exige la API (producto.dto, pedido.dto)
 ├── utils/           Funciones puras (precios)
-└── data/            Datos de las vistas informativas (blog) y datos de ejemplo usados por las pruebas
+├── test/            API simulada para las pruebas (apiFalsa.js) y render con proveedores
+└── data/            Datos de las vistas informativas (blog)
 ```
+
+## Modelo de datos (ER)
+El backend guarda todo en PostgreSQL con **13 tablas**. Detalle completo en el [README del backend](https://github.com/SAFD666/Backend_SonidoVivo#3-diseño-de-datos).
+
+![Diagrama Entidad-Relación](https://raw.githubusercontent.com/SAFD666/Backend_SonidoVivo/main/docs/der.png)
 
 ## Integración con la API
 - **Axios solo vive en `src/services`.** Los componentes reciben datos y funciones por `props.algo`.
-- `api.js` usa la dirección base **`/api/v1`**. En el servidor, el **proxy de Vite** reenvía `/api` al backend (`localhost:8080`), así el código no depende de la IP pública y no hay solicitudes entre orígenes.
+- `api.js` usa la dirección base **`/api/v1`**, agrega el token a cada petición (interceptor) y cierra la sesión si el backend responde **401**.
 - Cada pantalla muestra **carga** ("Cargando catálogo…", "Ingresando…", "Procesando pago…"), **éxito** y **error** (mensaje del servidor en la página).
 
 | Pantalla | Endpoints |
@@ -41,6 +55,34 @@ src/
 | Panel → Productos, Categorías | `POST/PUT/DELETE /productos`, `POST/PUT /categorias` |
 | Panel → Pedidos | `GET /pedidos`, `PATCH /pedidos/{codigo}/estado` |
 | Panel → Usuarios, Mi perfil | `GET/POST /usuarios`, `PUT /usuarios/{id}` |
+
+## Sesión con JWT (diagrama de secuencia)
+
+```mermaid
+sequenceDiagram
+    participant U as Usuario
+    participant R as React (Axios)
+    participant A as API Spring Boot
+    participant D as PostgreSQL
+    U->>R: correo y contraseña
+    R->>A: POST /api/v1/auth/login
+    A->>D: busca usuario por correo
+    A->>A: BCrypt compara la contraseña
+    A-->>R: 200 {accessToken, usuario}
+    R->>R: guarda el token en sessionStorage (sv_token)
+    U->>R: recarga la página (F5)
+    R->>A: GET /api/v1/auth/me  Authorization: Bearer token
+    A-->>R: 200 usuario (sesión recuperada)
+    U->>R: abre una pantalla protegida
+    R->>A: GET /api/v1/pedidos  Authorization: Bearer token
+    alt token válido y rol permitido
+        A-->>R: 200 datos
+    else token vencido
+        A-->>R: 401 → React cierra la sesión y va al login
+    else rol sin permiso
+        A-->>R: 403 → React muestra el mensaje de error
+    end
+```
 
 ## Sesión y permisos
 - **Token JWT en `sessionStorage`** (`sv_token`): la sesión **sobrevive a la recarga** (se recupera con `GET /auth/me`) y se borra al **cerrar sesión**, al **cerrar la pestaña** o cuando el backend responde **401** (token vencido, 60 min).
@@ -53,7 +95,7 @@ Requisitos: **Node.js 24** y el backend encendido en el mismo servidor (puerto 8
 ```bash
 npm install
 npm run dev                         # desarrollo: http://localhost:5173 (o http://IP:5173 en la EC2)
-npm run build && npm run preview    # versión compilada (la que se presenta)
+npm run build && npm run preview    # versión compilada (la que está desplegada)
 npm run test:run                    # pruebas unitarias (Vitest)
 ```
 
@@ -69,3 +111,4 @@ npm run test:run                    # pruebas unitarias (Vitest)
 | Mis pedidos y cambio de estado en el panel | ✅ |
 | CRUD de usuarios, productos y categorías contra la API | ✅ |
 | Pruebas Vitest de páginas adaptadas a la API (simulando los services) | ✅ |
+| Despliegue en EC2 (frontend :5173 + backend :8080) | ✅ |
