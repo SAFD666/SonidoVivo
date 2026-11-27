@@ -10,6 +10,8 @@ Tienda online de instrumentos musicales **Sonido Vivo**: catálogo, carrito, com
 | **Tienda desplegada** | http://107.23.135.231:5173 |
 | **Swagger (API)** | http://107.23.135.231:8080/swagger-ui.html |
 | **Material complementario** | https://drive.google.com/drive/folders/1eXd8NFijBfCoC-25je-nII3zIXDd5BaY?usp=sharing |
+| **Manual de usuario** | https://docs.google.com/document/d/1WJgRbxIf-CZcRo_O6dgy0l-Gr47MWzE7/edit?usp=sharing&ouid=107919457226449011612&rtpof=true&sd=true |
+| **ERS 3 sonido vivo** | https://docs.google.com/document/d/1dkc3X5eDmp4PPQ0_IL3hBQezFApZRrDH/edit?usp=sharing&ouid=107919457226449011612&rtpof=true&sd=true |
 
 > **Sobre las direcciones públicas:** el servidor es una EC2 de AWS Academy. La IP pública cambia cada vez que se reinicia el laboratorio. Si no responde, hay que pedir al equipo la IP del día. Última IP: **107.23.135.231** (27/11/2026).
 
